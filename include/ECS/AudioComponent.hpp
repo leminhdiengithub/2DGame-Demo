@@ -4,40 +4,46 @@
 #include"SDL2/SDL.h"
 #include"SDL2/SDL_mixer.h"
 
-class SoundComponent : public Component
+class AudioComponent : public Component
 {
     private:
         Mix_Music* backgroundMusic;
     public:
-        SoundComponent( const char* path, int frequency, Uint16 format, int channels, int chunksize)
+        AudioComponent( const char* path)
         {
-            if( Mix_OpenAudio( frequency, format, channels, chunksize ) < 0 )
+            if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
             {
                 std::cout << " SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << std::endl;
             }
-            setSound(path);
+            loadMusic(path);
         }
 
-        ~SoundComponent()
+        ~AudioComponent()
         {
             Mix_FreeMusic(backgroundMusic);
         }
 
-        void setSound(const char* path)
+        void loadMusic(const char* path)
         {
             backgroundMusic = Mix_LoadMUS(path);
             if (!backgroundMusic)
             {
                 std::cout << "Failed to load sound: " << Mix_GetError() << std::endl;
+                exit(0);
             }
         }
 
-        void PlayMusic()
+        void playMusic()
         {
             if (backgroundMusic)
             {
                 Mix_PlayMusic(backgroundMusic, -1);
             }
+        }
+
+        void isPlaying()
+        {
+            Mix_PlayingMusic();
         }
 };
 

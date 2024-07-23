@@ -79,8 +79,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     enemy.addComponent<ColliderComponent>("enemy");
     enemy.addGroup(groupEnemies);
 
-    song.addComponent<SoundComponent>("res/sounds/mskts.mp3", 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
-    song.getComponent<SoundComponent>().PlayMusic();
+    song.addComponent<AudioComponent>("res/sounds/mskts.mp3");
+    song.getComponent<AudioComponent>().playMusic();
 
 }
 
