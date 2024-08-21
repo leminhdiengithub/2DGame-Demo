@@ -168,4 +168,17 @@ public:
         entities.emplace_back(std::move(uPtr));
         return *e;
     }
+
+    // Add remove the entity
+    void removeEntity(Entity* entity)
+    {
+        auto it = std::find_if(entities.begin(), entities.end(),
+            [entity](const std::unique_ptr<Entity>& e) { return e.get() == entity; });
+
+        if (it != entities.end())
+        {
+            (*it)->destroy(); // Mark the entity as inactive 
+            entities.erase(it); // Delete the entity
+        }
+    }
 };

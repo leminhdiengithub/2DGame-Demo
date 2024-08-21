@@ -37,7 +37,7 @@ public:
         animationManager.addAnimation("walk_left", Animation(4, 3, 100));
 
         // Attack animation
-        animationManager.addAnimation("attack", Animation(5, 1, 100));
+        animationManager.addAnimation("attack", Animation(5, 3, 100));
 
         animationManager.Play("Idle");
         setTex(path);

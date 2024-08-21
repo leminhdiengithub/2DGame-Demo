@@ -113,6 +113,8 @@ void Game::update()
     SDL_Rect playerCol = player.getComponent<ColliderComponent>().collider;
     Vector2D playerPos = player.getComponent<TransformComponent>().position;
 
+    //manager.removeEntity(&enemy);
+
     manager.refresh();
     manager.update();
 
