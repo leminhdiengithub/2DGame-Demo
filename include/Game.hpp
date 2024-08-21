@@ -16,17 +16,23 @@ public:
     Game();
     ~Game();
 
-    void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
+    void initWindow(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
     
+    //setup
+    void setup();
+
     void handleEvents();
     bool running() { return isrunning;}
+    //update
     void update();
+    //render
     void render();
     void clean();
 
     static SDL_Renderer* renderer;
     static SDL_Event event; 
     static SDL_Rect camera;
+    static bool home;
 
     enum groupLabels : std::size_t
     {
