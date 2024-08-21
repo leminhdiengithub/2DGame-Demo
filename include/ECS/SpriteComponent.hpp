@@ -29,11 +29,15 @@ public:
     {
         animated = isAnimated;
 
+        // Move animation
         animationManager.addAnimation("Idle", Animation(0, 4, 100));
         animationManager.addAnimation("walk_up", Animation(2, 7, 100));
         animationManager.addAnimation("walk_down", Animation(1, 6, 100));
         animationManager.addAnimation("walk_right", Animation(3, 3, 100));
         animationManager.addAnimation("walk_left", Animation(4, 3, 100));
+
+        // Attack animation
+        animationManager.addAnimation("attack", Animation(5, 1, 100));
 
         animationManager.Play("Idle");
         setTex(path);

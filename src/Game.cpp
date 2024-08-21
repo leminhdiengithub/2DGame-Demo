@@ -106,6 +106,9 @@ void Game::handleEvents()
 
 void Game::update()
 {
+    /*std::cout << "x: " << player.getComponent<TransformComponent>().position.x 
+          << " y: " << player.getComponent<TransformComponent>().position.y 
+          << std::endl;*/
 
     SDL_Rect playerCol = player.getComponent<ColliderComponent>().collider;
     Vector2D playerPos = player.getComponent<TransformComponent>().position;

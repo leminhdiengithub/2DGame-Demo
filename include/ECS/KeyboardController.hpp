@@ -10,7 +10,7 @@ class KeyboardController : public Component
 public: 
     TransformComponent *transform;
 	SpriteComponent *sprite;
-    const Uint8* keystates = SDL_GetKeyboardState(NULL); 
+    const Uint8* keystates = SDL_GetKeyboardState(NULL);
 
 
     void init() override
@@ -43,6 +43,10 @@ public:
 		if (keystates[SDL_SCANCODE_A]) {
 			transform->velocity.x = -1;
 			sprite->Play("walk_left");
+		}
+		if (keystates[SDL_SCANCODE_K])
+		{
+			sprite->Play("attack");
 		}
 	}
 };
