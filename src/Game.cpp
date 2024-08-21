@@ -10,6 +10,7 @@ MapLayer* mapLayer;
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
+bool Game::home;
 
 SDL_Rect Game::camera = { 0,0,960,640 };
 
@@ -19,13 +20,18 @@ auto& player(manager.addEntity());
 auto& song(manager.addEntity());
 auto& enemy(manager.addEntity());
 
+auto& tiles(manager.getGroup(Game::groupMap));
+auto& players(manager.getGroup(Game::groupPlayer));
+auto& enimies(manager.getGroup(Game::groupEnemies));
+auto& colliders(manager.getGroup(Game::groupColliders));
+
 Game::Game()
 {}
 
 Game::~Game()
 {}
 
-void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
+void Game::initWindow(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
     int  flags = 0;
     if (fullscreen)
@@ -66,9 +72,15 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
     isrunning = true;
 
+}
+
+void Game::setup()
+{
+    isrunning = true;
+
     mapLayer->LoadMapLayer();
 
-    player.addComponent<TransformComponent>(3);
+    player.addComponent<TransformComponent>(1.75);
     player.addComponent<SpriteComponent>("res/gfx/player.png", true);
     player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
@@ -82,12 +94,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     song.addComponent<AudioComponent>("res/sounds/mskts.mp3");
     song.getComponent<AudioComponent>().playMusic();
 
+    home = false;
 }
-
-auto& tiles(manager.getGroup(Game::groupMap));
-auto& players(manager.getGroup(Game::groupPlayer));
-auto& enimies(manager.getGroup(Game::groupEnemies));
-auto& colliders(manager.getGroup(Game::groupColliders));
 
 void Game::handleEvents()
 {
