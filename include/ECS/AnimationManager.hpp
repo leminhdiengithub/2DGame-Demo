@@ -6,7 +6,8 @@ class AnimationManager
 {
 private:
     std::map<const char*, Animation> animations;
-    int animIndex = 0;
+    int xAnimIndex = 0;
+    int yAnimIndex = 0;
     int frames = 0;
     int speed = 100;
 
@@ -21,11 +22,13 @@ public:
     void Play(const char* animName)
     {
         frames = animations[animName].frames;
-        animIndex = animations[animName].index;
+        xAnimIndex = animations[animName].xIndex;
+        yAnimIndex = animations[animName].yIndex;
         speed = animations[animName].speed;
     }
 
     int getFrames() const { return frames; }
-    int getAnimIndex() const { return animIndex; }
+    int getXAnimIndex() const { return xAnimIndex; }
+    int getYAnimIndex() const { return yAnimIndex; }
     int getSpeed() const { return speed; }
 };

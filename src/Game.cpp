@@ -176,7 +176,7 @@ void Game::clean()
 {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
-    Mix_CloseAudio();//
+    Mix_CloseAudio();
     SDL_Quit();
     std::cout << "Game cleaned" << std::endl;
 }

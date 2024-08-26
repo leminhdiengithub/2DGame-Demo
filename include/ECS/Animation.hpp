@@ -2,14 +2,16 @@
 
 struct Animation
 {
-    int index;
+    int xIndex;
+    int yIndex;
     int frames;
     int speed;
 
     Animation(){}
-    Animation(int i, int f, int s)
+    Animation(int x,int y, int f, int s)
     {
-        index = i;
+        xIndex = x;
+        yIndex = y;
         frames = f;
         speed = s;
     }
