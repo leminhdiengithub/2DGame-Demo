@@ -3,7 +3,11 @@
 
 bool Collision::AABB(const SDL_Rect & A, const SDL_Rect & B)
 {
- return SDL_HasIntersection(&A, &B);
+ if (SDL_HasIntersection(&A, &B))
+    {
+        return true;
+    }
+    return false;   
 }
 
 bool Collision::AABB(const ColliderComponent& colA, const ColliderComponent& colB)
