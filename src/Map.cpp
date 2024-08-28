@@ -49,6 +49,18 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY, int griWidth) {
             AddTile(srcX * tileSize, srcY * tileSize, x * scaledSize, y * scaledSize);
         }
     }
+
+    // Add tile collision
+    for (int y = 0; y < sizeY; ++y) {
+        for (int x = 0; x < sizeX; ++x) {
+            int tileCode = mapData[y][x];
+            if (tileCode == 0) { // Giả sử các tile khác 0 là tile có collision
+                auto& tcol = manager.addEntity();
+                tcol.addComponent<ColliderComponent>("terrain", x * scaledSize, y * scaledSize, scaledSize);
+                tcol.addGroup(Game::groupColliders);
+            }
+        }
+    }
 }
 
 void Map::AddTile(int srcX, int srcY, int xpos, int ypos)
