@@ -54,7 +54,11 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY, int griWidth) {
     for (int y = 0; y < sizeY; ++y) {
         for (int x = 0; x < sizeX; ++x) {
             int tileCode = mapData[y][x];
-            if (tileCode == 0) { // Giả sử các tile khác 0 là tile có collision
+
+            const std::vector<int>& tileCodes = getCollisionTileCodes();
+
+            if (std::find(tileCodes.begin(), tileCodes.end(), tileCode) != tileCodes.end())
+            { 
                 auto& tcol = manager.addEntity();
                 tcol.addComponent<ColliderComponent>("terrain", x * scaledSize, y * scaledSize, scaledSize);
                 tcol.addGroup(Game::groupColliders);
@@ -68,5 +72,15 @@ void Map::AddTile(int srcX, int srcY, int xpos, int ypos)
     auto& tile(manager.addEntity());
     tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize, mapScale, mapFilePath);
     tile.addGroup(Game::groupMap);
+}
+
+void Map::setCollisionTileCodes(const std::vector<int>& codes) 
+{
+    collisionTileCodes = codes;
+}
+
+const std::vector<int>& Map::getCollisionTileCodes() const
+{
+    return collisionTileCodes;
 }
 
