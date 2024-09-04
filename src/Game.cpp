@@ -118,20 +118,16 @@ void Game::update()
           << " y: " << player.getComponent<TransformComponent>().position.y 
           << std::endl;*/
 
-    SDL_Rect playerCol = player.getComponent<ColliderComponent>().collider;
-    Vector2D playerPos = player.getComponent<TransformComponent>().position;
-
     //manager.removeEntity(&enemy);
-
+    
     manager.refresh();
     manager.update();
 
     for (auto& c : colliders)
     {
-        SDL_Rect cCol = c->getComponent<ColliderComponent>().collider;
-        if(Collision::AABB(cCol, playerCol))
+        if (Collision::AABB(player.getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>()))
         {
-            player.getComponent<TransformComponent>().position = playerPos;
+            Collision::ResolveCollision(player.getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>());
         }
     }
 
@@ -176,7 +172,7 @@ void Game::clean()
 {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
-    Mix_CloseAudio();
+    Mix_CloseAudio();//
     SDL_Quit();
     std::cout << "Game cleaned" << std::endl;
 }
