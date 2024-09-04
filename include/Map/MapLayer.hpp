@@ -16,7 +16,7 @@ public:
 
         m_Layer1->setCollisionTileCodes({});
         m_Layer1->LoadMap("res/gfx/mapFile_Layer1.csv", 30, 20, 8);
-        m_Layer2->setCollisionTileCodes({0});
+        m_Layer2->setCollisionTileCodes({70});
         m_Layer2->LoadMap("res/gfx/m_layer2.csv", 30,20, 16);
         /* Map - Layer*/
     }
