@@ -4,6 +4,7 @@
 #include "../TextureManager.hpp"
 #include "Animation.hpp"
 #include "AnimationManager.hpp"
+#include "../AssetManager.hpp"
 
 class SpriteComponent : public Component
 {
@@ -25,7 +26,7 @@ public:
         setTex(path);
     }
 
-    SpriteComponent(const char* path, bool isAnimated)
+    SpriteComponent(std::string id, bool isAnimated)
     {
         animated = isAnimated;
 
@@ -40,10 +41,10 @@ public:
         animationManager.addAnimation("attack", Animation(6, 1, 1, 100));
 
         animationManager.Play("Idle");
-        setTex(path);
+        setTex(id);
     }
 
-    SpriteComponent(const char* path, bool isAnimated, const char* charName)
+    SpriteComponent(std::string id, bool isAnimated, const char* charName)
     {
         animated = isAnimated;
 
@@ -52,17 +53,15 @@ public:
             animationManager.addAnimation("Idle", Animation(0, 0, 8, 100));
         }
         animationManager.Play("Idle");
-        setTex(path);
+        setTex(id);
     }
 
     ~SpriteComponent()
-    {
-        SDL_DestroyTexture(texture);
-    }
+    {}
 
-    void setTex(const char* path)
+    void setTex(std::string id)
     {
-        texture = TextureManager::loadTexture(path);
+        texture = Game::assets->GetTexture(id);
     }
 
     void init() override

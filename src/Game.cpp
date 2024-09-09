@@ -1,12 +1,13 @@
 #include"Game.hpp"
 #include"TextureManager.hpp"
-#include"Map/MapLayer.hpp"
+#include"Map.hpp"
 #include"ECS/Components.hpp"
 #include"Vector2D.hpp"
 #include"ECS/KeyboardController.hpp"
 #include"Collision.hpp"
+#include"AssetManager.hpp"
 
-MapLayer* mapLayer;
+Manager manager;
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
@@ -14,7 +15,7 @@ bool Game::home;
 
 SDL_Rect Game::camera = { 0,0,960,640 };
 
-Manager manager;
+AssetManager* Game::assets = new AssetManager(&manager);
 
 auto& player(manager.addEntity());
 auto& song(manager.addEntity());
@@ -78,16 +79,33 @@ void Game::setup()
 {
     isrunning = true;
 
-    mapLayer->LoadMapLayer();
+    assets->AddTexture("terrain","res/gfx/TX Tileset Grass.png");//
+    assets->AddTexture("terrain1","res/gfx/TX Plant.png");
+    assets->AddTexture("terrain2","res/gfx/TX Props.png");
+    assets->AddTexture("player", "res/gfx/player.png");//
+    assets->AddTexture("enemy","res/gfx/Enemy.png");
+
+    Map* m_Layer1 = new Map("terrain", 2, 32);//
+    Map* m_Layer2 = new Map("terrain1",2, 32);
+    Map* m_Layer4 = new Map("terrain2",2,32);
+
+    m_Layer1->setCollisionTileCodes({});
+    m_Layer1->LoadMap("res/gfx/mapFile_Layer1.csv", 30, 20, 8);
+
+    m_Layer2->setCollisionTileCodes({70});
+    m_Layer2->LoadMap("res/gfx/m_layer2.csv", 30, 20, 16);
+
+    m_Layer4->setCollisionTileCodes({242});
+    m_Layer4->LoadMap("res/gfx/m_layer4.csv", 30, 20, 16);
 
     player.addComponent<TransformComponent>(1.75);
-    player.addComponent<SpriteComponent>("res/gfx/player.png", true);
+    player.addComponent<SpriteComponent>("player", true);//
     player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayer);
 
     enemy.addComponent<TransformComponent>(200,200,160,160,3);
-    enemy.addComponent<SpriteComponent>("res/gfx/Enemy.png", true, "Souls");
+    enemy.addComponent<SpriteComponent>("enemy", true, "Souls");
     enemy.addComponent<ColliderComponent>("enemy");
     enemy.addGroup(groupEnemies);
 

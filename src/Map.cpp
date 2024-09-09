@@ -1,4 +1,4 @@
-#include "Map/Map.hpp"
+#include "Map.hpp"
 #include"Game.hpp"
 #include <fstream>
 #include <sstream>
@@ -8,7 +8,7 @@
 
 extern Manager manager;
 
-Map::Map(const char* mfp, int ms, int ts) : mapFilePath(mfp), mapScale(ms), tileSize(ts)
+Map::Map(std::string tID, int ms, int ts) : texID(tID), mapScale(ms), tileSize(ts)
 {
     scaledSize = ms * ts;
 }
@@ -70,7 +70,7 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY, int griWidth) {
 void Map::AddTile(int srcX, int srcY, int xpos, int ypos)
 {
     auto& tile(manager.addEntity());
-    tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize, mapScale, mapFilePath);
+    tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize, mapScale, texID);
     tile.addGroup(Game::groupMap);
 }
 

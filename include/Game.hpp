@@ -7,6 +7,7 @@
 #include<SDL2/SDL_mixer.h>
 #include<iostream>
 #include<vector>
+#include"AssetManager.hpp"
 
 class ColliderComponent;
 
@@ -33,6 +34,7 @@ public:
     static SDL_Event event; 
     static SDL_Rect camera;
     static bool home;
+    static class AssetManager* assets;
 
     enum groupLabels : std::size_t
     {
