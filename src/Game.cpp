@@ -136,7 +136,6 @@ void Game::update()
           << " y: " << player.getComponent<TransformComponent>().position.y 
           << std::endl;*/
 
-    //manager.removeEntity(&enemy);
     
     manager.refresh();
     manager.update();
