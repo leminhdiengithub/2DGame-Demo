@@ -25,6 +25,7 @@ auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayer));
 auto& enimies(manager.getGroup(Game::groupEnemies));
 auto& colliders(manager.getGroup(Game::groupColliders));
+auto& projecttiles(manager.getGroup(Game::groupPorjectiles));
 
 Game::Game()
 {}
@@ -84,6 +85,7 @@ void Game::setup()
     assets->AddTexture("terrain2","res/gfx/TX Props.png");
     assets->AddTexture("player", "res/gfx/player.png");//
     assets->AddTexture("enemy","res/gfx/Enemy.png");
+    assets->AddTexture("projectile","res/gfx/proj.png");
 
     Map* m_Layer1 = new Map("terrain", 2, 32);//
     Map* m_Layer2 = new Map("terrain1",2, 32);
@@ -108,6 +110,8 @@ void Game::setup()
     enemy.addComponent<SpriteComponent>("enemy", true, "Souls");
     enemy.addComponent<ColliderComponent>("enemy");
     enemy.addGroup(groupEnemies);
+
+    assets->CreateProjectile(Vector2D(600,600), Vector2D(2,0) ,200, 2, "projectile");
 
     song.addComponent<AudioComponent>("res/sounds/mskts.mp3");
     song.getComponent<AudioComponent>().playMusic();
@@ -148,6 +152,14 @@ void Game::update()
         }
     }
 
+    for ( auto& p : projecttiles)
+    {
+        if (Collision::AABB(player.getComponent<ColliderComponent>(), p->getComponent<ColliderComponent>()))
+        {
+            p->destroy();
+        }
+    }
+
     camera.x = player.getComponent<TransformComponent>().position.x - 480;
     camera.y = player.getComponent<TransformComponent>().position.y - 320;
 
@@ -179,6 +191,11 @@ void Game::render()
     for ( auto& e : enimies )
     {
         e->draw();
+    }
+
+    for ( auto& p : projecttiles )
+    {
+        p->draw();
     }
 
     //hiển thị tất cả nội dung đã được vẽ lên backbuffer vào cửa sổ.
