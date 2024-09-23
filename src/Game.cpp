@@ -111,7 +111,7 @@ void Game::setup()
     enemy.addComponent<ColliderComponent>("enemy");
     enemy.addGroup(groupEnemies);
 
-    assets->CreateProjectile(Vector2D(600,600), Vector2D(2,0) ,200, 2, "projectile");
+    assets->CreateProjectile(Vector2D(600,600), Vector2D(2,0) ,200, 2, "projectile");           
 
     song.addComponent<AudioComponent>("res/sounds/mskts.mp3");
     song.getComponent<AudioComponent>().playMusic();
