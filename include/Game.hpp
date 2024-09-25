@@ -42,7 +42,8 @@ public:
         groupPlayer,
         groupEnemies,
         groupColliders,
-        groupPorjectiles
+        groupPorjectiles,
+        groupULlabel
     };
 
 private:
