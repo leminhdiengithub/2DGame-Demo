@@ -48,5 +48,9 @@ public:
 		{
 			sprite->Play("attack");
 		}
+		if (keystates[SDL_SCANCODE_J])
+		{
+			Game::assets->CreateProjectile(Vector2D(transform->position.x * 0.5, transform->position.y *0.5),Vector2D(2,0) ,200, 2, "projectile");
+		}
 	}
 };
