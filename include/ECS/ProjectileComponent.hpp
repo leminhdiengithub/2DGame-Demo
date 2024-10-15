@@ -14,8 +14,15 @@ public:
 
     void init() override
     {
+        /* Để có thể sử dụng transfrom và projectile thì entity(projectile) phải được thêm TransformComponent 
+        và AudioComponent*/
         transfrom = &entity->getComponent<TransformComponent>();
         transfrom->velocity = velocity;
+
+        // Lấy AudioComponent từ entity
+        if (entity->hasComponent<AudioComponent>()) {
+            audio = &entity->getComponent<AudioComponent>();
+        }
     }
 
     void update() override
@@ -39,6 +46,7 @@ public:
 private:
 
     TransformComponent* transfrom;
+    AudioComponent* audio = nullptr;
     int range = 0;
     int speed = 0;
     int distance = 0;
