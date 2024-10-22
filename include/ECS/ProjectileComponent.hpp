@@ -32,7 +32,7 @@ public:
         if (distance > range)
         {
             std::cout << "Out of Range" << std::endl;
-            entity->destroy();
+            shouldDestroy = true;
 
         } else if ( transfrom->position.x > Game::camera.x + Game::camera.w ||
                     transfrom->position.x < Game::camera.x ||
@@ -40,16 +40,20 @@ public:
                     transfrom->position.y < Game::camera.y)
         {
             std::cout << "Out of bounds" << std::endl;
-            entity->destroy();
+            shouldDestroy = true;
         }
     }
-private:
 
+    bool isMakedForDestroy() const 
+    {
+        return shouldDestroy;
+    }
+private:
     TransformComponent* transfrom;
     AudioComponent* audio = nullptr;
     int range = 0;
     int speed = 0;
     int distance = 0;
     Vector2D velocity;
-
+    bool shouldDestroy;
 };

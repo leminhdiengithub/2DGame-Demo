@@ -170,6 +170,10 @@ void Game::update()
         {
             p->destroy();
         }
+        if (p->getComponent<ProjectileComponent>().isMakedForDestroy())
+        {
+            p->destroy();
+        }
     }
 
     camera.x = player.getComponent<TransformComponent>().position.x - 480;
