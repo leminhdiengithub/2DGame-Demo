@@ -13,7 +13,7 @@ class AudioComponent : public Component
         {
             if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
             {
-                std::cout << " SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << std::endl;
+                std::cerr << " SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << std::endl;
             }
             loadMusic(path);
         }
@@ -28,22 +28,34 @@ class AudioComponent : public Component
             backgroundMusic = Mix_LoadMUS(path);
             if (!backgroundMusic)
             {
-                std::cout << "Failed to load sound: " << Mix_GetError() << std::endl;
-                exit(0);
+                std::cerr << "Failed to load sound: " << Mix_GetError() << std::endl;
             }
         }
 
-        void playMusic()
-        {
-            if (backgroundMusic)
-            {
-                Mix_PlayMusic(backgroundMusic, -1);
+        void playMusic(int loops = -1) {
+            if (backgroundMusic) {
+                if (Mix_PlayMusic(backgroundMusic, loops) == -1) {
+                    std::cerr << "Error playing music: " << Mix_GetError() << std::endl;
+                }
             }
         }
 
-        void isPlaying()
+        bool isPlaying() const
         {
-            Mix_PlayingMusic();
+            return Mix_PlayingMusic() != 0;
         }
+
+        void stopMusic() 
+        {
+            Mix_HaltMusic();
+        }
+
+        void cleanAudio() {
+        if (backgroundMusic) {
+            Mix_FreeMusic(backgroundMusic);
+            backgroundMusic = nullptr;
+        }
+        Mix_CloseAudio(); // Đóng hệ thống âm thanh nếu không cần nữa
+    }
 };
 

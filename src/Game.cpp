@@ -233,6 +233,7 @@ void Game::clean()
     delete m_Layer4;
 
     delete assets;
+    song.destroy();
 
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
