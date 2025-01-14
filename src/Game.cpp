@@ -158,11 +158,31 @@ void Game::update()
     manager.refresh();
     manager.update();
 
+    bool isMusicPlaying = true; // Biến theo dõi trạng thái nhạc
+
     for (auto& c : colliders)
     {
         if (Collision::AABB(player.getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>()))
         {
             Collision::ResolveCollision(player.getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>());
+
+            // Nếu có va chạm và nhạc đang phát, thì dừng nhạc
+            if (song.hasComponent<AudioComponent>() && isMusicPlaying)
+            {
+                song.getComponent<AudioComponent>().stopMusic();
+                std::cout << "Music stopped due to collision." << std::endl;
+                isMusicPlaying = false; // Cập nhật trạng thái
+            }
+        }
+        else
+        {
+            // Nếu không có va chạm và nhạc chưa phát, thì phát nhạc
+            if (song.hasComponent<AudioComponent>() && !isMusicPlaying)
+            {
+                song.getComponent<AudioComponent>().playMusic();
+                std::cout << "Music resumed." << std::endl;
+                isMusicPlaying = true; // Cập nhật trạng thái
+            }
         }
     }
 
