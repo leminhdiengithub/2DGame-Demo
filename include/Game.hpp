@@ -49,5 +49,6 @@ public:
 private:
     int cnt = 0;
     bool isrunning;
+    bool isMusicPlaying = true; // Biến theo dõi trạng thái nhạc
     SDL_Window* window;
 };
