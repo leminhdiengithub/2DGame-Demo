@@ -7,11 +7,15 @@
 #include"Collision.hpp"
 #include"AssetManager.hpp"
 
+extern titleScreen title;
+extern pauseMenu pause;
+
 Manager manager;
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 bool Game::home;
+bool Game::isrunning = false;
 
 SDL_Rect Game::camera = { 0,0,960,640 };
 
@@ -144,8 +148,10 @@ void Game::handleEvents()
     case SDL_KEYDOWN:
         if (event.key.keysym.sym == SDLK_ESCAPE) 
         {
-            isrunning = false;////            
-        }
+			std::cout << "t" << std::endl;
+			/*(game.)*/on = false;
+			pause.on = true;
+		}
         break;
     default:
         break;

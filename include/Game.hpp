@@ -9,6 +9,10 @@
 #include<vector>
 #include"AssetManager.hpp"
 
+#include<Menu/PauseMenu.hpp>
+#include<Menu/TextBox.hpp>
+#include<Menu/TileScreen.hpp>
+
 class ColliderComponent;
 
 class Game
@@ -46,9 +50,10 @@ public:
         groupULlabel
     };
 
-private:
+    bool on = false;
     int cnt = 0;
-    bool isrunning;
-    bool isMusicPlaying = true; // Biến theo dõi trạng thái nhạc
+    static bool isrunning;
     SDL_Window* window;
+private:
+    bool isMusicPlaying = true; // Biến theo dõi trạng thái nhạc
 };

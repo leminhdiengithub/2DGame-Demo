@@ -1,44 +1,62 @@
 
 #define SDL_MAIN_HANDLED
 #include"Game.hpp"
-
+#include <chrono>  
 
 Game* game = nullptr;
+pauseMenu pause;
+titleScreen title;
 
-int main(int argc, char const *argv[])
+int main(int argc, char const* argv[])
 {
-
     const int FPS = 60;
-    const int farmeDelay = 1000 / FPS;
+    const int frameDelay = 1000 / FPS;
 
     Uint32 frameStart;
     int frameTime;
 
     game = new Game();
-                                                                                    //true để full màn hình
     game->initWindow("shadow knights v.0.1", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 960, 640, false);
     game->setup();
 
+    title.on = true;
+    pause.on = false;
+    game->on = false;         
+    game->isrunning = true;
+
     while (game->running())
     {
-
         frameStart = SDL_GetTicks();
 
-        game -> handleEvents();
-        game -> update();
-        game ->render();
+        if (title.on)
+        {
+            title.handleEvents();
+            title.update();
+            title.render();
+        }
+        else if (pause.on)
+        {
+            pause.handleEvents();
+            pause.update();
+            pause.render();
+        }
+        else if (game->on)
+        {
+            game->handleEvents();
+            game->update();
+            game->render();
+        }
 
         frameTime = SDL_GetTicks() - frameStart;
-
-        if (farmeDelay > frameTime)
+        if (frameDelay > frameTime)
         {
-            SDL_Delay(farmeDelay - frameTime);
+            SDL_Delay(frameDelay - frameTime);
         }
-        
     }
-
-    delete game;
+    
     game->clean();
+    delete game;
 
     return 0;
 }
+
