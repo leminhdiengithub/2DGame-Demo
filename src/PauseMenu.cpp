@@ -7,9 +7,8 @@ extern titleScreen title;
 pauseMenu::pauseMenu() {
 	for (int i = 0;i < n;i++) {
 		std::cout << i << std::endl;
-		textBoxes[i].x = 800 / 2;
-		textBoxes[i].y = (640 - ((n - 1) * 100)) / 2 + i * 100;  //neatly centered :)  Some of it is done in textbox.cpp because i need the surface size
-		//and I can't be bothered to change all the code to have it here
+		textBoxes[i].x = 960 / 2;
+		textBoxes[i].y = (640 - ((n - 1) * 100)) / 2 + i * 100;
 		textBoxes[0].message = "Continue";
 		textBoxes[1].message = "Options";
 		textBoxes[2].message = "Title Screen";
