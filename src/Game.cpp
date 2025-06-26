@@ -141,7 +141,12 @@ void Game::handleEvents()
     case SDL_QUIT:
         isrunning = false;
         break;
-    
+    case SDL_KEYDOWN:
+        if (event.key.keysym.sym == SDLK_ESCAPE) 
+        {
+            isrunning = false;////            
+        }
+        break;
     default:
         break;
     }
@@ -164,6 +169,7 @@ void Game::update()
     {
         if (Collision::AABB(player.getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>()))
         {
+            //Block Component
             Collision::ResolveCollision(player.getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>());       
         }
     }
