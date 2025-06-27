@@ -58,6 +58,14 @@ void Game::initWindow(const char* title, int xpos, int ypos, int width, int heig
         return;
     }
 
+    // Check SDL_Init() for errors
+    if (TTF_Init() == -1)
+    {
+        std::cout << "Error: TTF_Init - " << TTF_GetError() << std::endl;
+        SDL_Quit();
+        return;
+    }
+
     std::cout << " Subssystem Initialised..." << std::endl;
 
     // Create a window
@@ -90,11 +98,6 @@ void Game::setup()
 {
     isrunning = true;
 
-    if (TTF_Init() == -1 )
-    {
-        std::cout << "Error: SDL_TTF" << std::endl;
-    }
-    
     assets->AddTexture("terrain","res/gfx/TX Tileset Grass.png");//
     assets->AddTexture("terrain1","res/gfx/TX Plant.png");
     assets->AddTexture("terrain2","res/gfx/TX Props.png");

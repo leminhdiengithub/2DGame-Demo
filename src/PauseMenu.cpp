@@ -9,11 +9,11 @@ pauseMenu::pauseMenu() {
 		std::cout << i << std::endl;
 		textBoxes[i].x = 960 / 2;
 		textBoxes[i].y = (640 - ((n - 1) * 100)) / 2 + i * 100;
-		textBoxes[0].message = "Continue";
-		textBoxes[1].message = "Options";
-		textBoxes[2].message = "Title Screen";
-		textBoxes[3].message = "Quit";
 	}
+	textBoxes[0].message = "Continue";
+	textBoxes[1].message = "Options";
+	textBoxes[2].message = "Title Screen";
+	textBoxes[3].message = "Quit";
 };
 	pauseMenu::~pauseMenu() {};
 
