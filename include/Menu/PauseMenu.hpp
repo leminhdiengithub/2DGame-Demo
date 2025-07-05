@@ -11,9 +11,12 @@ struct pauseMenu {
 	int pos = 0;
 	bool on = false;
 
+	
 	int n = 4;
 	textBox textBoxes[4];
-
+	
+	int mx, my;
+	
 	pauseMenu();
 	~pauseMenu();
 

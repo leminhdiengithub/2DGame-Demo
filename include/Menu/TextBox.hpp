@@ -9,6 +9,8 @@ struct textBox {
 	const char* message;
 	int size;
 
+	SDL_Rect getRect();
+
 	textBox();
 	~textBox();
 

@@ -36,3 +36,21 @@ void textBox::renderText() {
 	SDL_FreeSurface(surfaceMessage);
 	SDL_DestroyTexture(Message);
 }
+
+SDL_Rect textBox::getRect() {
+    TTF_Font* Sans = TTF_OpenFont("res/font/EvilEmpire-4BBVK.ttf", size);
+    if (!Sans) return { x, y, 0, 0 };
+
+    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, message, c);
+    SDL_Rect rect = {
+        x - surfaceMessage->w / 2,
+        y - surfaceMessage->h / 2,
+        surfaceMessage->w,
+        surfaceMessage->h
+    };
+
+    SDL_FreeSurface(surfaceMessage);
+    TTF_CloseFont(Sans);
+
+    return rect;
+}

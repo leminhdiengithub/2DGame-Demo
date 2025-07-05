@@ -15,6 +15,7 @@ struct titleScreen {
 
 	bool on = false;
 	
+	int mx, my;
 
 	titleScreen();
 	~titleScreen();

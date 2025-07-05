@@ -32,6 +32,27 @@ void titleScreen::handleEvents() { //change parameter "position"
 	case SDL_QUIT:
 		game->isrunning = false;
 		break;
+	
+	case SDL_MOUSEBUTTONDOWN:
+		if (event.button.button == SDL_BUTTON_LEFT)
+		{
+			int mx = event.button.x;
+        int my = event.button.y;
+        for (int i = 0; i < n; i++) {
+            SDL_Rect rect = textBoxes[i].getRect();
+            if (mx >= rect.x && mx <= rect.x + rect.w &&
+                my >= rect.y && my <= rect.y + rect.h) {
+                pos = i;
+                // xử lý click như Enter
+                switch (pos) {
+                    case 0: on = false; game->on = true; break;
+                    case 1: std::cout << "Options\n"; break;
+                    case 2: game->isrunning = false; break;
+                }
+            }
+        }
+		}
+		
 
 	case SDL_KEYDOWN:
 		switch (event.key.keysym.sym) {
@@ -64,13 +85,23 @@ void titleScreen::handleEvents() { //change parameter "position"
 
 void titleScreen::update() { //animate the option selected (change the size)
 
+	SDL_GetMouseState(&mx, &my);// Get mouse current coordinates
 	for (int i = 0;i < n;i++) { //reset all to default
-		textBoxes[i].c = {255,255,255};
-		textBoxes[i].size = 24;
+		SDL_Rect rect = textBoxes[i].getRect();
+
+        if (mx >= rect.x && mx <= rect.x + rect.w &&
+            my >= rect.y && my <= rect.y + rect.h) {
+            pos = i;  // check the line had chose
+		
+			textBoxes[i].c = { 255,255,255 };
+			textBoxes[i].size = 24;
+		}
+		textBoxes[i].c = {255, 255, 255};
+        textBoxes[i].size = 24;
 	}
 
 	textBoxes[pos].c = { 255,255,0 }; //put yellow for the one selected
-	textBoxes[pos].size =42;
+	textBoxes[pos].size = 42;
 	
 }
 
