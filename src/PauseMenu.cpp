@@ -29,62 +29,61 @@ void pauseMenu::handleEvents() {
 
 	switch (event.type) {
 
-	case SDL_QUIT:
-		game->isrunning = false;
+		case SDL_QUIT:
+			game->isrunning = false;
+			break;
+		
+		case SDL_MOUSEBUTTONDOWN:
+		if (event.button.button == SDL_BUTTON_LEFT) {
+			int mx = event.button.x;
+			int my = event.button.y;
+			for (int i = 0; i < n; i++) {
+				SDL_Rect rect = textBoxes[i].getRect();
+				if (mx >= rect.x && mx <= rect.x + rect.w &&
+					my >= rect.y && my <= rect.y + rect.h) {
+					pos = i;
+					// xử lý click như Enter
+					switch (pos) {
+						case 0: on = false; game->on = true; break;
+						case 1: std::cout << "Options\n"; break;
+						case 2: on = false; title.on = true; break;
+						case 3: game->isrunning = false; break;
+					}
+				}
+			}
+		}
 		break;
-	
-	case SDL_MOUSEBUTTONDOWN:
-    if (event.button.button == SDL_BUTTON_LEFT) {
-        int mx = event.button.x;
-        int my = event.button.y;
-        for (int i = 0; i < n; i++) {
-            SDL_Rect rect = textBoxes[i].getRect();
-            if (mx >= rect.x && mx <= rect.x + rect.w &&
-                my >= rect.y && my <= rect.y + rect.h) {
-                pos = i;
-                // xử lý click như Enter
-                switch (pos) {
-                    case 0: on = false; game->on = true; break;
-                    case 1: std::cout << "Options\n"; break;
-                    case 2: on = false; title.on = true; break;
-                    case 3: game->isrunning = false; break;
-                }
-            }
-        }
-    }
-    break;
 
 	case SDL_KEYDOWN:
 		switch (event.key.keysym.sym) {
-		case SDLK_UP:
-			pos -= 1;
-			break;
-		case SDLK_DOWN:
-			pos += 1;
-			break;
+			case SDLK_UP:
+				pos -= 1;
+				break;
+			case SDLK_DOWN:
+				pos += 1;
+				break;
 
-		case SDLK_RETURN:
-			if (pos == 0) { /*(title.)*/on = false;game->on = true; }
-			if (pos == 1) std::cout << "options" << std::endl;
-			if (pos == 2) { 
-				on = false; 
-				title.on = true; 
-			}
+			case SDLK_RETURN:
+				if (pos == 0) { /*(title.)*/on = false;game->on = true; }
+				if (pos == 1) std::cout << "options" << std::endl;
+				if (pos == 2) { 
+					on = false; 
+					title.on = true; 
+				}
 
-			if (pos == 3) game->isrunning = false;
+				if (pos == 3) game->isrunning = false;
+				break;
+
+			default:
+				break;
+		}
+			if (pos == n) pos = 0;
+			if (pos < 0) pos = n - 1;
+
 			break;
-
+			
 		default:
 			break;
-		}
-		if (pos == n) pos = 0;
-		if (pos < 0) pos = n - 1;
-
-		break;
-
-
-	default:
-		break;
 	}
 	
 };
