@@ -13,6 +13,9 @@ struct titleScreen {
 	int n = 3;
 	textBox textBoxes[3];
 
+	SDL_Texture *texture;
+    SDL_Rect srcRect, destRect;
+
 	bool on = false;
 	
 	int mx, my;

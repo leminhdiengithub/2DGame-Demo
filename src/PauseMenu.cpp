@@ -7,8 +7,8 @@ extern titleScreen title;
 pauseMenu::pauseMenu() {
 	for (int i = 0;i < n;i++) {
 		std::cout << i << std::endl;
-		textBoxes[i].x = 960 / 2;
-		textBoxes[i].y = (640 - ((n - 1) * 100)) / 2 + i * 100;
+		textBoxes[i].x = WIDTH / 2;
+		textBoxes[i].y = (HEIGHT - ((n - 1) * 100)) / 2 + i * 100;
 	}
 	textBoxes[0].message = "Continue";
 	textBoxes[1].message = "Options";

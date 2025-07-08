@@ -1,6 +1,7 @@
 #include <Menu/TileScreen.hpp>
 #include <SDL2/SDL.h>
 #include <Game.hpp>
+#include <TextureManager.hpp>
 
 extern Game* game;
 extern pauseMenu pause;
@@ -10,13 +11,16 @@ titleScreen::titleScreen() {
 
 	for (int i = 0;i < n;i++) {
 		std::cout << i << std::endl;
-		textBoxes[i].x = 960/2;
-		textBoxes[i].y = (640-((n-1) * 100)) / 2 + i * 100;
+		textBoxes[i].x = WIDTH/2;
+		textBoxes[i].y = (HEIGHT-((n-1) * 100)) / 2 + i * 100;
 	}
 
 	textBoxes[0].message = "Play";
 	textBoxes[1].message = "Options";
 	textBoxes[2].message = "Quit";
+
+	// texture = TextureManager::loadTexture("");
+	// TextureManager::Draw(texture,);
 
 }
 

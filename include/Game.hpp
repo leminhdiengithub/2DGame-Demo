@@ -13,6 +13,9 @@
 #include<Menu/TextBox.hpp>
 #include<Menu/TileScreen.hpp>
 
+#define WIDTH 960
+#define HEIGHT 640
+
 class ColliderComponent;
 
 class Game

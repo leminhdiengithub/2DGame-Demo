@@ -17,7 +17,7 @@ SDL_Event Game::event;
 bool Game::home;
 bool Game::isrunning = false;
 
-SDL_Rect Game::camera = { 0,0,960,640 };
+SDL_Rect Game::camera = { 0,0,WIDTH,HEIGHT};
 
     Map* m_Layer1 = new Map("terrain", 2, 32);
     Map* m_Layer2 = new Map("terrain1",2, 32);
