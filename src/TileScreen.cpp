@@ -1,30 +1,40 @@
 #include <Menu/TileScreen.hpp>
 #include <SDL2/SDL.h>
 #include <Game.hpp>
-#include <TextureManager.hpp>
 
 extern Game* game;
 extern pauseMenu pause;
 
 titleScreen::titleScreen() {
+    for (int i = 0; i < n; i++) {
+        std::cout << i << std::endl;
+        textBoxes[i].x = WIDTH / 2;
+        textBoxes[i].y = (HEIGHT - ((n - 1) * 100)) / 2 + i * 100;
+    }
 
-
-	for (int i = 0;i < n;i++) {
-		std::cout << i << std::endl;
-		textBoxes[i].x = WIDTH/2;
-		textBoxes[i].y = (HEIGHT-((n-1) * 100)) / 2 + i * 100;
-	}
-
-	textBoxes[0].message = "Play";
-	textBoxes[1].message = "Options";
-	textBoxes[2].message = "Quit";
-
-	// texture = TextureManager::loadTexture("");
-	// TextureManager::Draw(texture,);
-
+    textBoxes[0].message = "Play";
+    textBoxes[1].message = "Options";
+    textBoxes[2].message = "Quit";
 }
 
+
 titleScreen::~titleScreen() {}
+
+void titleScreen::loadAssets(){
+
+	// Load image one time
+    backgroundTexture = TextureManager::loadTexture("res/gfx/Background.jpg");
+    if (!backgroundTexture) {
+        std::cerr << "Failed to load background image!\n";
+    }
+
+    // get image size and set rect
+    int imgW, imgH;
+    SDL_QueryTexture(backgroundTexture, NULL, NULL, &imgW, &imgH);
+    srcRect = { 0, 0, imgW, imgH };
+    destRect = { 0, 0, WIDTH, HEIGHT };
+
+}
 
 void titleScreen::handleEvents() { //change parameter "position"
 
@@ -110,15 +120,18 @@ void titleScreen::update() { //animate the option selected (change the size)
 }
 
 void titleScreen::render() {
-	SDL_SetRenderDrawColor(Game::renderer, 20, 20, 20, 255);
-	SDL_RenderClear(Game::renderer);
+    SDL_SetRenderDrawColor(Game::renderer, 20, 20, 20, 255);
+    SDL_RenderClear(Game::renderer); // delete old frame
 
-	SDL_Color White = { 255,255,255 };
-	for (int i = 0;i < n;i++) {
-		textBoxes[i].renderText();
-	}
+    // Draw image (if loaded image)
+    if (backgroundTexture) {
+        TextureManager::Draw(backgroundTexture, srcRect, destRect, SDL_FLIP_NONE);
+    }
 
+    // Draw TextBoxs
+    for (int i = 0; i < n; i++) {
+        textBoxes[i].renderText();
+    }
 
-	SDL_RenderPresent(Game::renderer);
-
+    SDL_RenderPresent(Game::renderer); // Update new frame
 }

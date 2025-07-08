@@ -15,12 +15,23 @@ pauseMenu::pauseMenu() {
 	textBoxes[2].message = "Title Screen";
 	textBoxes[3].message = "Quit";
 };
-	pauseMenu::~pauseMenu() {};
+pauseMenu::~pauseMenu() {};
 
-	
+void pauseMenu::loadAssets(){
 
+	// Load image one time
+    backgroundTexture = TextureManager::loadTexture("res/gfx/Background.jpg");
+    if (!backgroundTexture) {
+        std::cerr << "Failed to load background image!\n";
+    }
 
+    // get image size and set rect
+    int imgW, imgH;
+    SDL_QueryTexture(backgroundTexture, NULL, NULL, &imgW, &imgH);
+    srcRect = { 0, 0, imgW, imgH };
+    destRect = { 0, 0, WIDTH, HEIGHT };
 
+}
 
 void pauseMenu::handleEvents() {
 	//std::cout << "hi" << std::endl;
@@ -112,6 +123,12 @@ void pauseMenu::update() {
 void pauseMenu::render() {
 	SDL_SetRenderDrawColor(Game::renderer, 20, 20, 20, 255);
 	SDL_RenderClear(Game::renderer);
+
+	if (backgroundTexture)
+	{
+		TextureManager::Draw(backgroundTexture, srcRect, destRect, spriteFlip);
+	}
+	
 
 	SDL_Color White = { 255,255,255 };
 	for (int i = 0;i < n;i++) {
