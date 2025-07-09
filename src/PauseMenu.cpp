@@ -20,7 +20,7 @@ pauseMenu::~pauseMenu() {};
 void pauseMenu::loadAssets(){
 
 	// Load image one time
-    backgroundTexture = TextureManager::loadTexture("res/gfx/Background.jpg");
+    backgroundTexture = TextureManager::loadTexture("res/gfx/Background.png");
     if (!backgroundTexture) {
         std::cerr << "Failed to load background image!\n";
     }
