@@ -161,6 +161,15 @@ public:
         return groupedEntities[mGroup];
     }
 
+    void clear() 
+    { 
+        entities.clear();
+        for (auto& group : groupedEntities)
+        {
+            group.clear();
+        } 
+    }
+
     Entity& addEntity()
     {
         Entity* e = new Entity(*this);

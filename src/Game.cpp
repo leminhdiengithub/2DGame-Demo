@@ -252,6 +252,8 @@ void Game::render()
 
 void Game::clean()
 {
+    manager.clear();
+
     delete m_Layer1;
     delete m_Layer2;
     delete m_Layer4;
