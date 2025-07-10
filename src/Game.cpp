@@ -125,7 +125,7 @@ void Game::setup()
 
     enemy.addComponent<TransformComponent>(200,200,160,160,2);
     enemy.addComponent<SpriteComponent>("enemy", true, "Souls");
-    enemy.addComponent<ColliderComponent>("enemy");
+    enemy.addComponent<ColliderComponent>("enemy", 130, 125, 75, 100); /* x y w h*/
     enemy.addGroup(groupEnemies);
 
     SDL_Color white = { 255, 255, 255, 255 };
@@ -179,8 +179,12 @@ void Game::update()
     {
         song.getComponent<AudioComponent>().stopMusic();
     }
-    
 
+    if (Collision::AABB(player.getComponent<ColliderComponent>(), enemy.getComponent<ColliderComponent>()))
+    {
+        Collision::ResolveCollision(player.getComponent<ColliderComponent>(), enemy.getComponent<ColliderComponent>());
+    }
+        
     for (auto& c : colliders)
     {
         if (Collision::AABB(player.getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>()))
