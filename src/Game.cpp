@@ -125,7 +125,7 @@ void Game::setup()
 
     enemy.addComponent<TransformComponent>(200,200,160,160,2);
     enemy.addComponent<SpriteComponent>("enemy", true, "Souls");
-    enemy.addComponent<ColliderComponent>("enemy", 130, 125, 75, 100); /* x y w h*/
+    enemy.addComponent<ColliderComponent>("enemy", 130, 125, 70, 95); /* x y w h*/
     enemy.addGroup(groupEnemies);
 
     SDL_Color white = { 255, 255, 255, 255 };
