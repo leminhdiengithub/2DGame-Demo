@@ -103,7 +103,7 @@ void Game::setup()
     assets->AddTexture("terrain2","res/gfx/TX Props.png");
     assets->AddTexture("player", "res/gfx/player.png");//
     assets->AddTexture("enemy","res/gfx/Enemy.png");
-    assets->AddTexture("projectile","res/gfx/proj.png");
+    assets->AddTexture("projectile","res/gfx/proje.png");
     assets->AddFont("arial", "res/font/EvilEmpire-4BBVK.ttf", 16);
 
     

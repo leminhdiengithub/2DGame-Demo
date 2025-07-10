@@ -11,7 +11,7 @@ void AssetManager::CreateProjectile(Vector2D pos, Vector2D vel, int range, int s
 {
     auto& projectle(manager->addEntity());
     projectle.addComponent<TransformComponent>(pos.x, pos.y, 32, 32, 1);
-    projectle.addComponent<SpriteComponent>(id);
+    projectle.addComponent<SpriteComponent>(id, true, "projectile");
     projectle.addComponent<AudioComponent>("res/sounds/Projectile_sound.mp3");
     projectle.addComponent<ProjectileComponent>(range, speed, vel);
     projectle.addComponent<ColliderComponent>("projectile");

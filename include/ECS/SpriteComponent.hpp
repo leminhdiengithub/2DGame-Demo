@@ -52,6 +52,11 @@ public:
         {
             animationManager.addAnimation("Idle", Animation(0, 0, 8, 100));
         }
+        if (charName = "projectile")
+        {
+            animationManager.addAnimation("Idle", Animation(0, 0, 6, 100));
+        }
+        
         animationManager.Play("Idle");
         setTex(id);
     }
