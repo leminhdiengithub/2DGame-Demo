@@ -111,7 +111,7 @@ void Game::setup()
     m_Layer1->setCollisionTileCodes({});
     m_Layer1->LoadMap("res/gfx/mapFile_Layer1.csv", 30, 20, 8);
 
-    m_Layer2->setCollisionTileCodes({70});
+    m_Layer2->setCollisionTileCodes({});
     m_Layer2->LoadMap("res/gfx/m_layer2.csv", 30, 20, 16);
 
     m_Layer4->setCollisionTileCodes({242});
@@ -135,7 +135,7 @@ void Game::setup()
     assets->CreateProjectile(Vector2D(600,600), Vector2D(2,0) ,200, 2, "projectile");           
 
     song.addComponent<AudioComponent>("res/sounds/mskts.mp3");
-    song.getComponent<AudioComponent>().playMusic();
+    
 
     home = false;
 }
@@ -172,7 +172,14 @@ void Game::update()
     manager.refresh();
     manager.update();
 
-    bool isMusicPlaying = true; // Biến theo dõi trạng thái nhạc
+    if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
+    {
+        song.getComponent<AudioComponent>().playMusic();
+    } else if (!on && Mix_PlayingMusic() != 0)
+    {
+        song.getComponent<AudioComponent>().stopMusic();
+    }
+    
 
     for (auto& c : colliders)
     {
