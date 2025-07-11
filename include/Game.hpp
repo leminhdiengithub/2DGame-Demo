@@ -50,7 +50,8 @@ public:
         groupEnemies,
         groupColliders,
         groupPorjectiles,
-        groupULlabel
+        groupULlabel,
+        groupTrees
     };
 
     bool on = false;

@@ -56,6 +56,11 @@ public:
         {
             animationManager.addAnimation("Idle", Animation(0, 0, 6, 100));
         }
+        if (charName = "treeDemo")
+        {
+            animationManager.addAnimation("Idle", Animation(0, 0, 16, 100));
+        }
+        
         
         animationManager.Play("Idle");
         setTex(id);
