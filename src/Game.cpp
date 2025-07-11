@@ -226,40 +226,13 @@ void Game::update()
 void Game::render()
 {
     SDL_RenderClear(renderer);
-    for ( auto& t : tiles )
-    {
-        t->draw();
-    }
-    
-    for( auto& c: colliders)
-    {
-        c->draw();
-    }
-
-    for ( auto& p : players )
-    {
-        p->draw();
-    }
-
-    for ( auto& e : enimies )
-    {
-        e->draw();
-    }
-
-    for ( auto& p : projecttiles )
-    {
-        p->draw();
-    }
-
-    for (auto& l : labels)
-    {
-        l->draw();
-    }
-    for (auto& t : trees)
-    {
-        t->draw();
-    }
-    
+    for ( auto& t : tiles ) { t->draw(); }
+    for( auto& c: colliders) { c->draw(); }
+    for ( auto& p : players ) { p->draw(); }
+    for ( auto& e : enimies ) { e->draw(); }
+    for ( auto& p : projecttiles ) { p->draw(); }
+    for (auto& l : labels) { l->draw(); }
+    for (auto& t : trees) { t->draw(); }
     
     //hiển thị tất cả nội dung đã được vẽ lên backbuffer vào cửa sổ.
     SDL_RenderPresent(renderer);
