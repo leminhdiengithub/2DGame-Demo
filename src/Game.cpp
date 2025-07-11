@@ -29,7 +29,6 @@ auto& player(manager.addEntity());
 auto& song(manager.addEntity());
 auto& enemy(manager.addEntity());
 auto& label(manager.addEntity());
-auto& treeDemo(manager.addEntity());
 
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayer));
@@ -139,10 +138,8 @@ void Game::setup()
 
     assets->CreateProjectile(Vector2D(600,600), Vector2D(2,0) ,200, 2, "projectile");
     
-    treeDemo.addComponent<TransformComponent>(180, 531, 96, 53, 2);
-    treeDemo.addComponent<SpriteComponent>("treeDemo",true,"treeDemo");
-    treeDemo.addComponent<ColliderComponent>("treeDemo", 42, 140, 26, 24);
-    treeDemo.addGroup(groupTrees);
+
+    assets->CreateTree(Vector2D(180, 513),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
 
     song.addComponent<AudioComponent>("res/sounds/mskts.mp3");
     

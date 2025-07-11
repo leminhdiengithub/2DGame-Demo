@@ -18,6 +18,15 @@ void AssetManager::CreateProjectile(Vector2D pos, Vector2D vel, int range, int s
     projectle.addGroup(Game::groupPorjectiles);
 }
 
+void AssetManager::CreateTree(Vector2D pos, int posH, int posW, Vector2D col, int colH, int colW, float scale, std::string id)
+{
+    auto& tree(manager->addEntity());
+    tree.addComponent<TransformComponent>(pos.x, pos.y, posH, posW, scale);
+    tree.addComponent<SpriteComponent>(id, true, "treeDemo");
+    tree.addComponent<ColliderComponent>(id, col.x, col.y, colW, colH);
+    tree.addGroup(Game::groupTrees);
+}
+
 void AssetManager::AddTexture(std::string id, const char* path)
 {
     textures.emplace(id, TextureManager::loadTexture(path));
