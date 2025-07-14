@@ -130,6 +130,7 @@ void Game::setup()
     enemy.addComponent<TransformComponent>(200,200,160,160,2);
     enemy.addComponent<SpriteComponent>("enemy", true, "Souls");
     enemy.addComponent<ColliderComponent>("enemy", 130, 125, 70, 95); /* x y w h*/
+    enemy.addComponent<MouseController>();
     enemy.addGroup(groupEnemies);
 
     SDL_Color white = { 255, 255, 255, 255 };
@@ -179,13 +180,13 @@ void Game::update()
     manager.refresh();
     manager.update();
 
-    if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
+    /*if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
     {
         song.getComponent<AudioComponent>().playMusic();
     } else if (!on && Mix_PlayingMusic() != 0)
     {
         song.getComponent<AudioComponent>().stopMusic();
-    }
+    }*/
 
     if (Collision::AABB(player.getComponent<ColliderComponent>(), enemy.getComponent<ColliderComponent>()))
     {

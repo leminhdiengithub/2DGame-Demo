@@ -24,6 +24,7 @@ void AssetManager::CreateTree(Vector2D pos, int posH, int posW, Vector2D col, in
     tree.addComponent<TransformComponent>(pos.x, pos.y, posH, posW, scale);
     tree.addComponent<SpriteComponent>(id, true, "treeDemo");
     tree.addComponent<ColliderComponent>(id, col.x, col.y, colW, colH);
+    tree.addComponent<MouseController>();
     tree.addGroup(Game::groupTrees);
 }
 
