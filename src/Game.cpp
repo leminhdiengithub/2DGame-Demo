@@ -140,7 +140,12 @@ void Game::setup()
     assets->CreateProjectile(Vector2D(600,600), Vector2D(2,0) ,200, 2, "projectile");
     
 
-    assets->CreateTree(Vector2D(180, 513),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
+    assets->CreateTree(Vector2D(57, 414),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
+    assets->CreateTree(Vector2D(225, 413),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
+    assets->CreateTree(Vector2D(133, 524),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
+    assets->CreateTree(Vector2D(333, 527),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
+    assets->CreateTree(Vector2D(442, 412),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
+
 
     song.addComponent<AudioComponent>("res/sounds/mskts.mp3");
     
@@ -172,13 +177,12 @@ void Game::handleEvents()
 
 void Game::update()
 {
+    manager.refresh();
+    manager.update();
+
     /*std::cout << "x: " << player.getComponent<TransformComponent>().position.x 
           << " y: " << player.getComponent<TransformComponent>().position.y 
           << std::endl;*/
-
-    
-    manager.refresh();
-    manager.update();
 
     /*if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
     {
@@ -187,6 +191,7 @@ void Game::update()
     {
         song.getComponent<AudioComponent>().stopMusic();
     }*/
+
 
     if (Collision::AABB(player.getComponent<ColliderComponent>(), enemy.getComponent<ColliderComponent>()))
     {
