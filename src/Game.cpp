@@ -102,7 +102,7 @@ void Game::setup()
 
     assets->AddTexture("terrain","res/gfx/TX Tileset Grass.png");//
     assets->AddTexture("terrain1","res/gfx/TX Plant.png");
-    assets->AddTexture("terrain2","res/gfx/TX Props.png");
+    assets->AddTexture("terrain2","res/gfx/TX Tileset Wall.png");
     assets->AddTexture("player", "res/gfx/player.png");//
     assets->AddTexture("enemy","res/gfx/Enemy.png");
     assets->AddTexture("projectile","res/gfx/proje.png");
@@ -118,7 +118,7 @@ void Game::setup()
     m_Layer2->setCollisionTileCodes({});
     m_Layer2->LoadMap("res/gfx/m_layer2.csv", 30, 20, 16);
 
-    m_Layer4->setCollisionTileCodes({242});
+    m_Layer4->setCollisionTileCodes({20,42,113,24,50});
     m_Layer4->LoadMap("res/gfx/m_layer4.csv", 30, 20, 16);
 
     player.addComponent<TransformComponent>(1.75);
