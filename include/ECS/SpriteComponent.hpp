@@ -48,15 +48,17 @@ public:
     {
         animated = isAnimated;
 
-        if(charName = "Souls")
+        
+
+        if(std::string(charName) == "Souls")
         {
             animationManager.addAnimation("Idle", Animation(0, 0, 8, 100));
         }
-        if (charName = "projectile")
+        if (std::string(charName) == "projectile")
         {
             animationManager.addAnimation("Idle", Animation(0, 0, 6, 100));
         }
-        if (charName = "treeDemo")
+        if (std::string(charName) == "treeDemo")
         {
             animationManager.addAnimation("Idle", Animation(0, 0, 16, 100));
         }
