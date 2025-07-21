@@ -36,7 +36,7 @@ auto& enimies(manager.getGroup(Game::groupEnemies));
 auto& colliders(manager.getGroup(Game::groupColliders));
 auto& projecttiles(manager.getGroup(Game::groupPorjectiles));
 auto& labels(manager.getGroup(Game::groupULlabel));
-auto& trees(manager.getGroup(Game::groupTrees));
+auto& trees(manager.getGroup(Game::groupObject));
 
 
 Game::Game()

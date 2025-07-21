@@ -16,6 +16,7 @@ public:
     //gameproject
     void CreateProjectile(Vector2D pos, Vector2D vel, int range, int speed, std::string id);
     void CreateTree(Vector2D pos, int posH, int posW, Vector2D col, int colH, int colW, float scale, std::string id);
+    void CreateRock(Vector2D pos, int posH, int posW, Vector2D col, int colH, int colW, float scale, std::string id);
 
     //texture management
     void AddTexture(std::string id, const char* path);

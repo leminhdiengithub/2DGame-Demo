@@ -25,7 +25,7 @@ void AssetManager::CreateTree(Vector2D pos, int posH, int posW, Vector2D col, in
     tree.addComponent<SpriteComponent>(id, true, "treeDemo");
     tree.addComponent<ColliderComponent>(id, col.x, col.y, colW, colH);
     tree.addComponent<MouseController>();
-    tree.addGroup(Game::groupTrees);
+    tree.addGroup(Game::groupObject);
 }
 
 void AssetManager::AddTexture(std::string id, const char* path)

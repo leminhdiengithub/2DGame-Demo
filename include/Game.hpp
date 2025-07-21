@@ -51,7 +51,7 @@ public:
         groupColliders,
         groupPorjectiles,
         groupULlabel,
-        groupTrees
+        groupObject
     };
 
     bool on = false;
@@ -59,5 +59,5 @@ public:
     static bool isrunning;
     SDL_Window* window;
 private:
-    bool isMusicPlaying = true; // Biến theo dõi trạng thái nhạc
+    bool isMusicPlaying = true;
 };
