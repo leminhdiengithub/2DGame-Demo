@@ -30,7 +30,7 @@ public:
     {
         animated = isAnimated;
 
-        // Move animation                              (y, x, frames, speed)
+        // Move animation                              (x, y, frames, speed)
         animationManager.addAnimation("Idle", Animation(0, 0, 4, 100));
         animationManager.addAnimation("walk_down", Animation(0, 1, 5, 100));
         animationManager.addAnimation("walk_up", Animation(0, 2, 5, 100));
@@ -38,7 +38,7 @@ public:
         animationManager.addAnimation("walk_left", Animation(0, 4, 5, 100));
 
         // Attack animation
-        animationManager.addAnimation("attack", Animation(6, 1, 1, 100));
+        animationManager.addAnimation("attack", Animation(7, 1, 2, 100));
 
         animationManager.Play("Idle");
         setTex(id);
@@ -47,8 +47,6 @@ public:
     SpriteComponent(std::string id, bool isAnimated, const char* charName)
     {
         animated = isAnimated;
-
-        
 
         if(std::string(charName) == "Souls")
         {
@@ -62,7 +60,10 @@ public:
         {
             animationManager.addAnimation("Idle", Animation(0, 0, 16, 100));
         }
-        
+        if (std::string(charName) == "rockDemo")
+        {
+            animationManager.addAnimation("Idle", Animation(5, 15, 1, 100));
+        }
         
         animationManager.Play("Idle");
         setTex(id);

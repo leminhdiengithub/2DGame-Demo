@@ -28,6 +28,16 @@ void AssetManager::CreateTree(Vector2D pos, int posH, int posW, Vector2D col, in
     tree.addGroup(Game::groupObject);
 }
 
+void AssetManager::CreateRock(Vector2D pos, int posH, int posW, Vector2D col, int colW, int colH, float scale, std::string id)
+{
+    auto& rock(manager->addEntity());
+    rock.addComponent<TransformComponent>(pos.x, pos.y, posH, posW, scale);
+    rock.addComponent<SpriteComponent>(id,true,"rockDemo");
+    rock.addComponent<ColliderComponent>(id, col.x, col.y, colW, colH);
+    rock.addComponent<MouseController>();
+    rock.addGroup(Game::groupObject);
+}
+
 void AssetManager::AddTexture(std::string id, const char* path)
 {
     textures.emplace(id, TextureManager::loadTexture(path));

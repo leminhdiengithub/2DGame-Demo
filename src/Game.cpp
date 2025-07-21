@@ -36,8 +36,7 @@ auto& enimies(manager.getGroup(Game::groupEnemies));
 auto& colliders(manager.getGroup(Game::groupColliders));
 auto& projecttiles(manager.getGroup(Game::groupPorjectiles));
 auto& labels(manager.getGroup(Game::groupULlabel));
-auto& trees(manager.getGroup(Game::groupObject));
-
+auto& objects(manager.getGroup(Game::groupObject));
 
 Game::Game()
 {}
@@ -108,6 +107,7 @@ void Game::setup()
     assets->AddTexture("projectile","res/gfx/proje.png");
 
     assets->AddTexture("treeDemo","res/gfx/Pine Tree - GREEN  - Spritesheet.png");
+    assets->AddTexture("rockDemo","res/gfx/TX Props.png");
 
     assets->AddFont("arial", "res/font/EvilEmpire-4BBVK.ttf", 16);
 
@@ -145,7 +145,8 @@ void Game::setup()
     assets->CreateTree(Vector2D(133, 524),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
     assets->CreateTree(Vector2D(333, 527),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
     assets->CreateTree(Vector2D(442, 412),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
-
+    
+    assets->CreateRock(Vector2D(200,300),32,32,Vector2D(0,0),32,32,1,"rockDemo");
 
     song.addComponent<AudioComponent>("res/sounds/mskts.mp3");
     
@@ -237,8 +238,8 @@ void Game::render()
     for ( auto& p : players ) { p->draw(); }
     for ( auto& e : enimies ) { e->draw(); }
     for ( auto& p : projecttiles ) { p->draw(); }
+    for (auto& o : objects) { o->draw(); }
     for (auto& l : labels) { l->draw(); }
-    for (auto& t : trees) { t->draw(); }
     
     //hiển thị tất cả nội dung đã được vẽ lên backbuffer vào cửa sổ.
     SDL_RenderPresent(renderer);
