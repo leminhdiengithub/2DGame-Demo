@@ -7,6 +7,7 @@
 #include<SDL2/SDL_mixer.h>
 #include<iostream>
 #include<vector>
+#include"ECS/ECS.hpp" // Important*
 #include"AssetManager.hpp"
 
 #include<Menu/PauseMenu.hpp>
@@ -70,5 +71,10 @@ private:
     Map* m_Layer1 = nullptr;
     Map* m_Layer2 = nullptr;
     Map* m_Layer4 = nullptr;
+
+    Entity* player = nullptr;
+    Entity* song = nullptr;
+    Entity* enemy = nullptr;
+    Entity* label = nullptr;
 
 };

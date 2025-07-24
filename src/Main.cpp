@@ -32,7 +32,7 @@ int main(int argc, char const* argv[])
 
         if (title.on)
         {
-            if (game->resetSetup)
+            if (game->resetSetup == true )
             {
                 game->clearData();
                 game->setup();

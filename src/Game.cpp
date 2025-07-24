@@ -1,6 +1,5 @@
 #include"Game.hpp"
 #include"TextureManager.hpp"
-#include"ECS/Components.hpp"
 #include"Vector2D.hpp"
 #include"ECS/KeyboardController.hpp"
 #include"Collision.hpp"
@@ -19,11 +18,6 @@ bool Game::isrunning = false;
 SDL_Rect Game::camera = { 0,0,WIDTH,HEIGHT};
 
 AssetManager* Game::assets = new AssetManager(&manager);
-
-auto& player(manager.addEntity());
-auto& song(manager.addEntity());
-auto& enemy(manager.addEntity());
-auto& label(manager.addEntity());
 
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayer));
@@ -94,6 +88,11 @@ void Game::setup()
 {
     isrunning = true;
 
+    player = &manager.addEntity();
+    song   = &manager.addEntity();
+    enemy  = &manager.addEntity();
+    label  = &manager.addEntity();
+
     assets->AddTexture("terrain","res/gfx/TX Tileset Grass.png");//
     assets->AddTexture("terrain1","res/gfx/TX Plant.png");
     assets->AddTexture("terrain2","res/gfx/TX Tileset Wall.png");
@@ -118,21 +117,21 @@ void Game::setup()
     m_Layer4->setCollisionTileCodes({20,42,113,24,50});
     m_Layer4->LoadMap("res/gfx/m_layer4.csv", 30, 20, 16);
 
-    player.addComponent<TransformComponent>(1.75);
-    player.addComponent<SpriteComponent>("player", true);//
-    player.addComponent<KeyboardController>();
-    player.addComponent<ColliderComponent>("player");
-    player.addGroup(groupPlayer);
+    player->addComponent<TransformComponent>(1.75);
+    player->addComponent<SpriteComponent>("player", true);//
+    player->addComponent<KeyboardController>();
+    player->addComponent<ColliderComponent>("player");
+    player->addGroup(groupPlayer);
 
-    enemy.addComponent<TransformComponent>(200,200,160,160,2);
-    enemy.addComponent<SpriteComponent>("enemy", true, "Souls");
-    enemy.addComponent<ColliderComponent>("enemy", 130, 125, 70, 95); /* x y w h*/
-    enemy.addComponent<MouseController>();
-    enemy.addGroup(groupEnemies);
+    enemy->addComponent<TransformComponent>(200,200,160,160,2);
+    enemy->addComponent<SpriteComponent>("enemy", true, "Souls");
+    enemy->addComponent<ColliderComponent>("enemy", 130, 125, 70, 95); /* x y w h*/
+    enemy->addComponent<MouseController>();
+    enemy->addGroup(groupEnemies);
 
     SDL_Color white = { 255, 255, 255, 255 };
-    label.addComponent<ULlabel>(10, 10, "Game_demo","arial", white );
-    label.addGroup(groupULlabel);
+    label->addComponent<ULlabel>(10, 10, "Game_demo","arial", white );
+    label->addGroup(groupULlabel);
 
     assets->CreateProjectile(Vector2D(600,600), Vector2D(2,0) ,200, 2, "projectile");
     
@@ -145,7 +144,7 @@ void Game::setup()
     
     assets->CreateRock(Vector2D(200,300),32,32,Vector2D(0,0),32,32,1,"rockDemo");
 
-    song.addComponent<AudioComponent>("res/sounds/mskts.mp3");
+    song->addComponent<AudioComponent>("res/sounds/mskts.mp3");
     
 
     home = false;
@@ -182,32 +181,32 @@ void Game::update()
           << " y: " << player.getComponent<TransformComponent>().position.y 
           << std::endl;*/
 
-    /*if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
+    if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
     {
-        song.getComponent<AudioComponent>().playMusic();
+        song->getComponent<AudioComponent>().playMusic();
     } else if (!on && Mix_PlayingMusic() != 0)
     {
-        song.getComponent<AudioComponent>().stopMusic();
-    }*/
+        song->getComponent<AudioComponent>().stopMusic();
+    }
 
 
-    if (Collision::AABB(player.getComponent<ColliderComponent>(), enemy.getComponent<ColliderComponent>()))
+    if (Collision::AABB(player->getComponent<ColliderComponent>(), enemy->getComponent<ColliderComponent>()))
     {
-        Collision::ResolveCollision(player.getComponent<ColliderComponent>(), enemy.getComponent<ColliderComponent>());
+        Collision::ResolveCollision(player->getComponent<ColliderComponent>(), enemy->getComponent<ColliderComponent>());
     }
         
     for (auto& c : colliders)
     {
-        if (Collision::AABB(player.getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>()))
+        if (Collision::AABB(player->getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>()))
         {
             //Block Component
-            Collision::ResolveCollision(player.getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>());       
+            Collision::ResolveCollision(player->getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>());       
         }
     }
 
     for ( auto& p : projecttiles)
     {
-        if (Collision::AABB(player.getComponent<ColliderComponent>(), p->getComponent<ColliderComponent>()))
+        if (Collision::AABB(player->getComponent<ColliderComponent>(), p->getComponent<ColliderComponent>()))
         {
             p->destroy();
         }
@@ -217,8 +216,8 @@ void Game::update()
         }
     }
 
-    camera.x = player.getComponent<TransformComponent>().position.x - 480;
-    camera.y = player.getComponent<TransformComponent>().position.y - 320;
+    camera.x = player->getComponent<TransformComponent>().position.x - 480;
+    camera.y = player->getComponent<TransformComponent>().position.y - 320;
 
     // Ensure the camera stays within the bounds
     camera.x = std::max(0, std::min(camera.x, camera.w));
@@ -251,7 +250,7 @@ void Game::clean()
     delete m_Layer4;
 
     delete assets;
-    song.destroy();
+    song->destroy();
 
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
@@ -274,5 +273,5 @@ void Game::clearData()
     delete m_Layer4;
 
     delete assets;
-    song.destroy();
+    song->destroy();
 }
