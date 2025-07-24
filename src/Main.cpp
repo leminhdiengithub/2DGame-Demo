@@ -32,6 +32,13 @@ int main(int argc, char const* argv[])
 
         if (title.on)
         {
+            if (game->resetSetup)
+            {
+                game->clearData();
+                game->setup();
+                game->resetSetup = false;
+            }
+            
             title.handleEvents();
             title.update();
             title.render();
@@ -47,6 +54,13 @@ int main(int argc, char const* argv[])
             game->handleEvents();
             game->update();
             game->render();
+            if (title.on == true)
+            {
+                game->on = false;
+                pause.on = false;
+                game->resetSetup = true;
+            }
+            
         }
 
         frameTime = SDL_GetTicks() - frameStart;

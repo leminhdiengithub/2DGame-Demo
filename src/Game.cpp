@@ -1,6 +1,5 @@
 #include"Game.hpp"
 #include"TextureManager.hpp"
-#include"Map.hpp"
 #include"ECS/Components.hpp"
 #include"Vector2D.hpp"
 #include"ECS/KeyboardController.hpp"
@@ -18,10 +17,6 @@ bool Game::home;
 bool Game::isrunning = false;
 
 SDL_Rect Game::camera = { 0,0,WIDTH,HEIGHT};
-
-    Map* m_Layer1 = new Map("terrain", 2, 32);
-    Map* m_Layer2 = new Map("terrain1",2, 32);
-    Map* m_Layer4 = new Map("terrain2",2,32);
 
 AssetManager* Game::assets = new AssetManager(&manager);
 
@@ -111,13 +106,15 @@ void Game::setup()
 
     assets->AddFont("arial", "res/font/EvilEmpire-4BBVK.ttf", 16);
 
-    
+    m_Layer1 = new Map("terrain", 2, 32);
     m_Layer1->setCollisionTileCodes({});
     m_Layer1->LoadMap("res/gfx/mapFile_Layer1.csv", 30, 20, 8);
 
+    m_Layer2 = new Map("terrain1", 2, 32);
     m_Layer2->setCollisionTileCodes({});
     m_Layer2->LoadMap("res/gfx/m_layer2.csv", 30, 20, 16);
 
+    m_Layer4 = new Map("terrain2", 2, 32);
     m_Layer4->setCollisionTileCodes({20,42,113,24,50});
     m_Layer4->LoadMap("res/gfx/m_layer4.csv", 30, 20, 16);
 
@@ -265,4 +262,17 @@ void Game::clean()
     SDL_Quit();        // Dọn dẹp SDL
 
     std::cout << "Game cleaned" << std::endl;
+}
+
+void Game::clearData()
+{
+
+    manager.clear();
+
+    delete m_Layer1;
+    delete m_Layer2;
+    delete m_Layer4;
+
+    delete assets;
+    song.destroy();
 }

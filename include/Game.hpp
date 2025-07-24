@@ -12,6 +12,8 @@
 #include<Menu/PauseMenu.hpp>
 #include<Menu/TextBox.hpp>
 #include<Menu/TileScreen.hpp>
+#include"Map.hpp"
+
 
 #define WIDTH 960
 #define HEIGHT 640
@@ -28,6 +30,7 @@ public:
     
     //setup
     void setup();
+    void clearData();
 
     void handleEvents();
     bool running() { return isrunning;}
@@ -40,8 +43,6 @@ public:
     static SDL_Renderer* renderer;
     static SDL_Event event; 
     static SDL_Rect camera;
-    static bool home;
-    static class AssetManager* assets;
 
     enum groupLabels : std::size_t
     {
@@ -54,10 +55,20 @@ public:
         groupObject
     };
 
+    static bool isrunning;
+    static class AssetManager* assets;
+    static bool home;
+
     bool on = false;
     int cnt = 0;
-    static bool isrunning;
-    SDL_Window* window;
-private:
+    bool resetSetup = false;
     bool isMusicPlaying = true;
+    
+private:
+    SDL_Window* window;
+
+    Map* m_Layer1 = nullptr;
+    Map* m_Layer2 = nullptr;
+    Map* m_Layer4 = nullptr;
+
 };
