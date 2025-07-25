@@ -32,9 +32,6 @@ int main(int argc, char const* argv[])
 
         if (title.on)
         {
-            game->clearData();
-            game->setup();        
-            
             title.handleEvents();
             title.update();
             title.render();
@@ -49,13 +46,7 @@ int main(int argc, char const* argv[])
         {
             game->handleEvents();
             game->update();
-            game->render();
-            if (title.on == true)
-            {
-                game->on = false;
-                pause.on = false;
-            }
-            
+            game->render();  
         }
 
         frameTime = SDL_GetTicks() - frameStart;

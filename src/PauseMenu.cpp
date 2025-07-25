@@ -57,7 +57,7 @@ void pauseMenu::handleEvents() {
 					switch (pos) {
 						case 0: on = false; game->on = true; break;
 						case 1: std::cout << "Options\n"; break;
-						case 2: on = false; title.on = true; break;
+						case 2: on = false; game->clearData(); title.on = true; break;
 						case 3: game->isrunning = false; break;
 					}
 				}
@@ -78,7 +78,8 @@ void pauseMenu::handleEvents() {
 				if (pos == 0) { /*(title.)*/on = false;game->on = true; }
 				if (pos == 1) std::cout << "options" << std::endl;
 				if (pos == 2) { 
-					on = false; 
+					on = false;
+					game->clearData(); 
 					title.on = true; 
 				}
 

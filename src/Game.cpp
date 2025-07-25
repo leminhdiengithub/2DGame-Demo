@@ -86,6 +86,8 @@ void Game::initWindow(const char* title, int xpos, int ypos, int width, int heig
 
 void Game::setup()
 {
+    std::cout << "[INFO] Game had set up..." << std::endl;
+
     isrunning = true;
 
     player = &manager.addEntity();
