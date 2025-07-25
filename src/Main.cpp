@@ -32,10 +32,9 @@ int main(int argc, char const* argv[])
 
         if (title.on)
         {
-            std::cout << "[INFO] Back to title screen → Resetting game data..." << std::endl;
             game->clearData();
             game->setup();        
-        
+            
             title.handleEvents();
             title.update();
             title.render();
