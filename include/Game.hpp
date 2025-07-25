@@ -62,7 +62,6 @@ public:
 
     bool on = false;
     int cnt = 0;
-    bool resetSetup = false;
     bool isMusicPlaying = true;
     
 private:
@@ -77,4 +76,13 @@ private:
     Entity* enemy = nullptr;
     Entity* label = nullptr;
 
+    static std::vector<Entity*> players;
+    static std::vector<Entity*> tiles;
+    static std::vector<Entity*> enimies;
+    static std::vector<Entity*> colliders;
+
+    std::vector<Entity*>& getColiderprojecttiles();
+
+    static std::vector<Entity*> objects;
+    static std::vector<Entity*> labels;
 };

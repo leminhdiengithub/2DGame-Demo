@@ -32,13 +32,10 @@ int main(int argc, char const* argv[])
 
         if (title.on)
         {
-            if (game->resetSetup == true )
-            {
-                game->clearData();
-                game->setup();
-                game->resetSetup = false;
-            }
-            
+            std::cout << "[INFO] Back to title screen → Resetting game data..." << std::endl;
+            game->clearData();
+            game->setup();        
+        
             title.handleEvents();
             title.update();
             title.render();
@@ -58,7 +55,6 @@ int main(int argc, char const* argv[])
             {
                 game->on = false;
                 pause.on = false;
-                game->resetSetup = true;
             }
             
         }

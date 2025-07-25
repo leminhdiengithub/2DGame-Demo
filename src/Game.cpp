@@ -19,13 +19,13 @@ SDL_Rect Game::camera = { 0,0,WIDTH,HEIGHT};
 
 AssetManager* Game::assets = new AssetManager(&manager);
 
-auto& tiles(manager.getGroup(Game::groupMap));
-auto& players(manager.getGroup(Game::groupPlayer));
-auto& enimies(manager.getGroup(Game::groupEnemies));
-auto& colliders(manager.getGroup(Game::groupColliders));
-auto& projecttiles(manager.getGroup(Game::groupPorjectiles));
-auto& labels(manager.getGroup(Game::groupULlabel));
-auto& objects(manager.getGroup(Game::groupObject));
+std::vector<Entity*> Game::tiles;
+std::vector<Entity*> Game::players;
+std::vector<Entity*> Game::enimies;
+std::vector<Entity*> Game::colliders;
+std::vector<Entity*>& Game::getColiderprojecttiles(){ return manager.getGroup(groupPorjectiles); }
+std::vector<Entity*> Game::labels;
+std::vector<Entity*> Game::objects;
 
 Game::Game()
 {}
@@ -93,6 +93,7 @@ void Game::setup()
     enemy  = &manager.addEntity();
     label  = &manager.addEntity();
 
+
     assets->AddTexture("terrain","res/gfx/TX Tileset Grass.png");//
     assets->AddTexture("terrain1","res/gfx/TX Plant.png");
     assets->AddTexture("terrain2","res/gfx/TX Tileset Wall.png");
@@ -146,6 +147,12 @@ void Game::setup()
 
     song->addComponent<AudioComponent>("res/sounds/mskts.mp3");
     
+    Game::players = manager.getGroup(Game::groupPlayer);
+    Game::tiles   = manager.getGroup(Game::groupMap);
+    Game::enimies = manager.getGroup(Game::groupEnemies);
+    Game::colliders = manager.getGroup(Game::groupColliders);
+    Game::labels = manager.getGroup(Game::groupULlabel);
+    Game::objects = manager.getGroup(Game::groupObject);
 
     home = false;
 }
@@ -204,7 +211,7 @@ void Game::update()
         }
     }
 
-    for ( auto& p : projecttiles)
+    for ( auto& p : Game::getColiderprojecttiles())
     {
         if (Collision::AABB(player->getComponent<ColliderComponent>(), p->getComponent<ColliderComponent>()))
         {
@@ -229,13 +236,13 @@ void Game::update()
 void Game::render()
 {
     SDL_RenderClear(renderer);
-    for ( auto& t : tiles ) { t->draw(); }
-    for( auto& c: colliders) { c->draw(); }
-    for ( auto& p : players ) { p->draw(); }
-    for ( auto& e : enimies ) { e->draw(); }
-    for ( auto& p : projecttiles ) { p->draw(); }
-    for (auto& o : objects) { o->draw(); }
-    for (auto& l : labels) { l->draw(); }
+    for ( auto& t : Game::tiles ) { t->draw(); }
+    for( auto& c: Game::colliders) { c->draw(); }
+    for ( auto& p : Game::players ) { p->draw(); }
+    for ( auto& e : Game::enimies ) { e->draw(); }
+    for ( auto& p : Game::getColiderprojecttiles()) { p->draw(); }
+    for (auto& o : Game::objects) { o->draw(); }
+    for (auto& l : Game::labels) { l->draw(); }
     
     //hiển thị tất cả nội dung đã được vẽ lên backbuffer vào cửa sổ.
     SDL_RenderPresent(renderer);
@@ -265,13 +272,29 @@ void Game::clean()
 
 void Game::clearData()
 {
+    std::cout << "[INFO] Clearing game data..." << std::endl;
 
+    manager.refresh();
     manager.clear();
 
-    delete m_Layer1;
-    delete m_Layer2;
-    delete m_Layer4;
+    players.clear();
+    tiles.clear();
+    enimies.clear();
+    colliders.clear();
+    labels.clear();
+    objects.clear();
+
+    delete m_Layer1; m_Layer1 = nullptr;
+    delete m_Layer2; m_Layer2 = nullptr;
+    delete m_Layer4; m_Layer4 = nullptr;
 
     delete assets;
-    song->destroy();
+    assets = new AssetManager(&manager);  // Gán lại sau khi xóa
+
+    if (song) {
+        song->destroy();
+        song = nullptr;
+    }
+
+    std::cout << "[INFO] Game data cleared.\n";
 }
