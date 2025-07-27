@@ -76,13 +76,11 @@ private:
     Entity* enemy = nullptr;
     Entity* label = nullptr;
 
-    static std::vector<Entity*> players;
-    static std::vector<Entity*> tiles;
-    static std::vector<Entity*> enimies;
-    static std::vector<Entity*> colliders;
-
+    std::vector<Entity*>& gettiles();
+    std::vector<Entity*>& getPlayers();
+    std::vector<Entity*>& getEnimies();
+    std::vector<Entity*>& getTileMapColliders();
     std::vector<Entity*>& getColiderprojecttiles();
-
-    static std::vector<Entity*> objects;
-    static std::vector<Entity*> labels;
+    std::vector<Entity*>& getObjects();
+    std::vector<Entity*>& getLabels();
 };

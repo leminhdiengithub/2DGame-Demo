@@ -19,13 +19,13 @@ SDL_Rect Game::camera = { 0,0,WIDTH,HEIGHT};
 
 AssetManager* Game::assets = new AssetManager(&manager);
 
-std::vector<Entity*> Game::tiles;
-std::vector<Entity*> Game::players;
-std::vector<Entity*> Game::enimies;
-std::vector<Entity*> Game::colliders;
+std::vector<Entity*>& Game::gettiles() {return manager.getGroup(groupMap); }
+std::vector<Entity*>& Game::getPlayers() { return manager.getGroup(groupPlayer); }
+std::vector<Entity*>& Game::getEnimies() { return manager.getGroup(groupEnemies); }
+std::vector<Entity*>& Game::getTileMapColliders() { return manager.getGroup(groupColliders); } //Col TileMap
 std::vector<Entity*>& Game::getColiderprojecttiles(){ return manager.getGroup(groupPorjectiles); }
-std::vector<Entity*> Game::labels;
-std::vector<Entity*> Game::objects;
+std::vector<Entity*>& Game::getObjects() { return manager.getGroup(groupObject); }
+std::vector<Entity*>& Game::getLabels()  { return manager.getGroup(groupULlabel); }
 
 Game::Game()
 {}
@@ -149,13 +149,6 @@ void Game::setup()
 
     song->addComponent<AudioComponent>("res/sounds/mskts.mp3");
     
-    Game::players = manager.getGroup(Game::groupPlayer);
-    Game::tiles   = manager.getGroup(Game::groupMap);
-    Game::enimies = manager.getGroup(Game::groupEnemies);
-    Game::colliders = manager.getGroup(Game::groupColliders);
-    Game::labels = manager.getGroup(Game::groupULlabel);
-    Game::objects = manager.getGroup(Game::groupObject);
-
     home = false;
 }
 
@@ -204,7 +197,7 @@ void Game::update()
         Collision::ResolveCollision(player->getComponent<ColliderComponent>(), enemy->getComponent<ColliderComponent>());
     }
         
-    for (auto& c : colliders)
+    for (auto& c : Game::getTileMapColliders())
     {
         if (Collision::AABB(player->getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>()))
         {
@@ -238,38 +231,16 @@ void Game::update()
 void Game::render()
 {
     SDL_RenderClear(renderer);
-    for ( auto& t : Game::tiles ) { t->draw(); }
-    for( auto& c: Game::colliders) { c->draw(); }
-    for ( auto& p : Game::players ) { p->draw(); }
-    for ( auto& e : Game::enimies ) { e->draw(); }
+    for ( auto& t : Game::gettiles() ) { t->draw(); }
+    for( auto& c: Game::getTileMapColliders()) { c->draw(); }
+    for ( auto& p : Game::getPlayers()) { p->draw(); }
+    for ( auto& e : Game::getEnimies() ) { e->draw(); }
     for ( auto& p : Game::getColiderprojecttiles()) { p->draw(); }
-    for (auto& o : Game::objects) { o->draw(); }
-    for (auto& l : Game::labels) { l->draw(); }
+    for (auto& o : Game::getObjects()) { o->draw(); }
+    for (auto& l : Game::getLabels()) { l->draw(); }
     
     //hiển thị tất cả nội dung đã được vẽ lên backbuffer vào cửa sổ.
     SDL_RenderPresent(renderer);
-}
-
-void Game::clean()
-{
-    manager.clear();
-
-    delete m_Layer1;
-    delete m_Layer2;
-    delete m_Layer4;
-
-    delete assets;
-    song->destroy();
-
-    SDL_DestroyWindow(window);
-    SDL_DestroyRenderer(renderer);
-
-    TTF_Quit();        // Dọn dẹp SDL_ttf
-    Mix_CloseAudio();  // Dừng âm thanh
-    Mix_Quit();        // Dọn dẹp SDL_mixer
-    SDL_Quit();        // Dọn dẹp SDL
-
-    std::cout << "Game cleaned" << std::endl;
 }
 
 void Game::clearData()
@@ -279,12 +250,12 @@ void Game::clearData()
     manager.refresh();
     manager.clear();
 
-    players.clear();
-    tiles.clear();
-    enimies.clear();
-    colliders.clear();
-    labels.clear();
-    objects.clear();
+    getPlayers().clear();
+    gettiles().clear();
+    getEnimies().clear();
+    getTileMapColliders().clear();
+    getObjects().clear();
+    getLabels().clear();
 
     delete m_Layer1; m_Layer1 = nullptr;
     delete m_Layer2; m_Layer2 = nullptr;
@@ -299,4 +270,37 @@ void Game::clearData()
     }
 
     std::cout << "[INFO] Game data cleared.\n";
+}
+
+void Game::clean()
+{
+    manager.clear();
+
+    getPlayers().clear();
+    gettiles().clear();
+    getEnimies().clear();
+    getTileMapColliders().clear();
+    getLabels().clear();
+    getObjects().clear();
+
+    delete m_Layer1; m_Layer1 = nullptr;
+    delete m_Layer2; m_Layer2 = nullptr;
+    delete m_Layer4; m_Layer4 = nullptr;
+
+    delete assets;
+
+    if (song) {
+        song->destroy();
+        song = nullptr;
+    }
+
+    SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(renderer);
+
+    TTF_Quit();        // Dọn dẹp SDL_ttf
+    Mix_CloseAudio();  // Dừng âm thanh
+    Mix_Quit();        // Dọn dẹp SDL_mixer
+    SDL_Quit();        // Dọn dẹp SDL
+
+    std::cout << "Game cleaned" << std::endl;
 }
