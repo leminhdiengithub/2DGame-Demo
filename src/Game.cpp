@@ -92,7 +92,6 @@ void Game::setup()
 
     player = &manager.addEntity();
     song   = &manager.addEntity();
-    enemy  = &manager.addEntity();
     label  = &manager.addEntity();
 
 
@@ -126,19 +125,18 @@ void Game::setup()
     player->addComponent<ColliderComponent>("player");
     player->addGroup(groupPlayer);
 
-    enemy->addComponent<TransformComponent>(200,200,160,160,2);
-    enemy->addComponent<SpriteComponent>("enemy", true, "Souls");
-    enemy->addComponent<ColliderComponent>("enemy", 130, 125, 70, 95); /* x y w h*/
-    enemy->addComponent<MouseController>();
-    enemy->addGroup(groupEnemies);
-
     SDL_Color white = { 255, 255, 255, 255 };
     label->addComponent<ULlabel>(10, 10, "Game_demo","arial", white );
     label->addGroup(groupULlabel);
 
+    assets->CreateEnimies(Vector2D(200, 200),160, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(882, 22),160, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(727, 378),160, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(146, 854),160, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+
+
     assets->CreateProjectile(Vector2D(600,600), Vector2D(2,0) ,200, 2, "projectile");
     
-
     assets->CreateTree(Vector2D(57, 414),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
     assets->CreateTree(Vector2D(225, 413),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
     assets->CreateTree(Vector2D(133, 524),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
@@ -179,24 +177,22 @@ void Game::update()
     manager.refresh();
     manager.update();
 
-    /*std::cout << "x: " << player.getComponent<TransformComponent>().position.x 
-          << " y: " << player.getComponent<TransformComponent>().position.y 
-          << std::endl;*/
-
-    if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
+    /*if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
     {
         song->getComponent<AudioComponent>().playMusic();
     } else if (!on && Mix_PlayingMusic() != 0)
     {
         song->getComponent<AudioComponent>().stopMusic();
-    }
+    }*/
 
-
-    if (Collision::AABB(player->getComponent<ColliderComponent>(), enemy->getComponent<ColliderComponent>()))
-    {
-        Collision::ResolveCollision(player->getComponent<ColliderComponent>(), enemy->getComponent<ColliderComponent>());
+    for (auto& e : Game::getEnimies())
+    {        
+        if (Collision::AABB(player->getComponent<ColliderComponent>(), e->getComponent<ColliderComponent>()))
+        {
+            Collision::ResolveCollision(player->getComponent<ColliderComponent>(), e->getComponent<ColliderComponent>());
+        }
     }
-        
+    
     for (auto& c : Game::getTileMapColliders())
     {
         if (Collision::AABB(player->getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>()))

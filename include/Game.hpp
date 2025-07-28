@@ -73,7 +73,6 @@ private:
 
     Entity* player = nullptr;
     Entity* song = nullptr;
-    Entity* enemy = nullptr;
     Entity* label = nullptr;
 
     std::vector<Entity*>& gettiles();

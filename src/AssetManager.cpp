@@ -7,6 +7,16 @@ AssetManager::AssetManager(Manager* man) : manager(man)
 AssetManager::~AssetManager()
 {}
 
+void AssetManager::CreateEnimies(Vector2D pos, int posH, int posW, Vector2D col, int colH, int colW, float scale, std::string id)
+{
+    auto& Enemy (manager->addEntity());
+    Enemy.addComponent<TransformComponent>(pos.x, pos.y ,posH ,posW ,scale);
+    Enemy.addComponent<SpriteComponent>(id , true, "Souls");
+    Enemy.addComponent<ColliderComponent>(id, col.x, col.y, colW, colH);
+    Enemy.addComponent<MouseController>();
+    Enemy.addGroup(Game::groupEnemies);
+
+}
 void AssetManager::CreateProjectile(Vector2D pos, Vector2D vel, int range, int speed, std::string id)
 {
     auto& projectle(manager->addEntity());
