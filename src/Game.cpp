@@ -98,7 +98,7 @@ void Game::setup()
     assets->AddTexture("terrain","res/gfx/TX Tileset Grass.png");//
     assets->AddTexture("terrain1","res/gfx/TX Plant.png");
     assets->AddTexture("terrain2","res/gfx/TX Tileset Wall.png");
-    assets->AddTexture("player", "res/gfx/player2.png");//
+    assets->AddTexture("player", "res/gfx/player.png");//
     assets->AddTexture("enemy","res/gfx/Enemy.png");
     assets->AddTexture("projectile","res/gfx/proje.png");
 
