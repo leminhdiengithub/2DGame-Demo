@@ -227,15 +227,25 @@ void Game::update()
 void Game::render()
 {
     SDL_RenderClear(renderer);
-    for ( auto& t : Game::gettiles() ) { t->draw(); }
-    for( auto& c: Game::getTileMapColliders()) { c->draw(); }
-    for ( auto& p : Game::getPlayers()) { p->draw(); }
-    for ( auto& e : Game::getEnimies() ) { e->draw(); }
-    for ( auto& p : Game::getColiderprojecttiles()) { p->draw(); }
-    for (auto& o : Game::getObjects()) { o->draw(); }
+
+    for (auto& t : Game::gettiles()) { t->draw(); }
+
+    // Gom object và player để sắp xếp theo x (Z-order ngang)
+    std::vector<Entity*> drawables = Game::getObjects();
+    for (auto& p : Game::getPlayers()) { drawables.push_back(p); }
+
+    std::sort(drawables.begin(), drawables.end(), [](Entity* a, Entity* b) {
+        return a->getComponent<ColliderComponent>().collider.y <
+               b->getComponent<ColliderComponent>().collider.y;
+    });
+
+    for (auto& d : drawables) { d->draw(); }
+
+    for (auto& c : Game::getTileMapColliders()) { c->draw(); }
+    for (auto& e : Game::getEnimies()) { e->draw(); }
+    for (auto& p : Game::getColiderprojecttiles()) { p->draw(); }
     for (auto& l : Game::getLabels()) { l->draw(); }
-    
-    //hiển thị tất cả nội dung đã được vẽ lên backbuffer vào cửa sổ.
+
     SDL_RenderPresent(renderer);
 }
 
