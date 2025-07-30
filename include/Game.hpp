@@ -70,6 +70,7 @@ private:
     Map* m_Layer1 = nullptr;
     Map* m_Layer2 = nullptr;
     Map* m_Layer4 = nullptr;
+    Map* m_layer5 = nullptr;
 
     Entity* player = nullptr;
     Entity* song = nullptr;

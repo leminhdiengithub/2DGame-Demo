@@ -119,6 +119,10 @@ void Game::setup()
     m_Layer4->setCollisionTileCodes({20,42,113,24,50});
     m_Layer4->LoadMap("res/gfx/m_layer4.csv", 30, 20, 16);
 
+    m_layer5 = new Map("terrain2", 2, 32);
+    m_layer5->setCollisionTileCodes({});
+    m_Layer4->LoadMap("res/gfx/m_layer5.csv", 30, 20, 16);
+
     player->addComponent<TransformComponent>(1.75);
     player->addComponent<SpriteComponent>("player", true);//
     player->addComponent<KeyboardController>();
