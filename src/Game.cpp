@@ -130,18 +130,15 @@ void Game::setup()
     label->addGroup(groupULlabel);
 
     assets->CreateEnimies(Vector2D(200, 200),160, 160, Vector2D(130,125), 95, 70, 2, "enemy");
-    assets->CreateEnimies(Vector2D(882, 22),160, 160, Vector2D(130,125), 95, 70, 2, "enemy");
-    assets->CreateEnimies(Vector2D(727, 378),160, 160, Vector2D(130,125), 95, 70, 2, "enemy");
-    assets->CreateEnimies(Vector2D(146, 854),160, 160, Vector2D(130,125), 95, 70, 2, "enemy");
 
 
     assets->CreateProjectile(Vector2D(600,600), Vector2D(2,0) ,200, 2, "projectile");
     
-    assets->CreateTree(Vector2D(57, 414),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
-    assets->CreateTree(Vector2D(225, 413),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
-    assets->CreateTree(Vector2D(133, 524),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
-    assets->CreateTree(Vector2D(333, 527),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
-    assets->CreateTree(Vector2D(442, 412),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
+    assets->CreateTree(Vector2D(749, 834),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
+    assets->CreateTree(Vector2D(700, 850),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
+    assets->CreateTree(Vector2D(655, 880),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
+    assets->CreateTree(Vector2D(580, 1000),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
+    assets->CreateTree(Vector2D(536, 1027),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
     
     assets->CreateRock(Vector2D(200,300),32,32,Vector2D(0,0),32,32,1,"rockDemo");
 
@@ -201,6 +198,16 @@ void Game::update()
             Collision::ResolveCollision(player->getComponent<ColliderComponent>(), c->getComponent<ColliderComponent>());       
         }
     }
+
+    for (auto& o : Game::getObjects())
+    {
+        if (Collision::AABB(player->getComponent<ColliderComponent>(), o->getComponent<ColliderComponent>()))
+        {
+            Collision::ResolveCollision(player->getComponent<ColliderComponent>(), o->getComponent<ColliderComponent>());
+        }
+        
+    }
+    
 
     for ( auto& p : Game::getColiderprojecttiles())
     {
