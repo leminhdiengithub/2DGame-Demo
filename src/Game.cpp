@@ -96,7 +96,6 @@ void Game::setup()
 
 
     assets->AddTexture("terrain","res/gfx/TX Tileset Grass.png");//
-    assets->AddTexture("terrain1","res/gfx/TX Plant.png");
     assets->AddTexture("terrain2","res/gfx/TX Tileset Wall.png");
     assets->AddTexture("player", "res/gfx/player.png");//
     assets->AddTexture("enemy","res/gfx/Enemy.png");
@@ -111,17 +110,9 @@ void Game::setup()
     m_Layer1->setCollisionTileCodes({});
     m_Layer1->LoadMap("res/gfx/mapFile_Layer1.csv", 30, 20, 8);
 
-    m_Layer2 = new Map("terrain1", 2, 32);
-    m_Layer2->setCollisionTileCodes({});
+    m_Layer2 = new Map("terrain2", 2, 32);
+    m_Layer2->setCollisionTileCodes({0,21,22,23,37,39,97,98,99,100,49,51});
     m_Layer2->LoadMap("res/gfx/m_layer2.csv", 30, 20, 16);
-
-    m_Layer4 = new Map("terrain2", 2, 32);
-    m_Layer4->setCollisionTileCodes({20,42,113,24,50});
-    m_Layer4->LoadMap("res/gfx/m_layer4.csv", 30, 20, 16);
-
-    m_layer5 = new Map("terrain2", 2, 32);
-    m_layer5->setCollisionTileCodes({});
-    m_Layer4->LoadMap("res/gfx/m_layer5.csv", 30, 20, 16);
 
     player->addComponent<TransformComponent>(1.75);
     player->addComponent<SpriteComponent>("player", true);//
@@ -138,13 +129,9 @@ void Game::setup()
 
     assets->CreateProjectile(Vector2D(600,600), Vector2D(2,0) ,200, 2, "projectile");
     
-    assets->CreateTree(Vector2D(749, 834),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
-    assets->CreateTree(Vector2D(700, 850),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
-    assets->CreateTree(Vector2D(655, 880),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
-    assets->CreateTree(Vector2D(580, 1000),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
-    assets->CreateTree(Vector2D(536, 1027),96, 53, Vector2D(42, 140), 24, 26, 2, "treeDemo");
+    assets->CreateTree(Vector2D(130, 4),96, 53, Vector2D(45, 140), 32, 16, 2, "treeDemo");
     
-    assets->CreateRock(Vector2D(200,300),32,32,Vector2D(0,0),32,32,1,"rockDemo");
+    assets->CreateRock(Vector2D(100,400),32,32,Vector2D(0,0),32,32,1,"rockDemo");
 
     song->addComponent<AudioComponent>("res/sounds/mskts.mp3");
     
@@ -185,6 +172,8 @@ void Game::update()
     {
         song->getComponent<AudioComponent>().stopMusic();
     }*/
+
+    //std::cout << player->getComponent<TransformComponent>().position.x << " + " << player->getComponent<TransformComponent>().position.y << std::endl;
 
     for (auto& e : Game::getEnimies())
     {        
@@ -276,7 +265,6 @@ void Game::clearData()
 
     delete m_Layer1; m_Layer1 = nullptr;
     delete m_Layer2; m_Layer2 = nullptr;
-    delete m_Layer4; m_Layer4 = nullptr;
 
     delete assets;
     assets = new AssetManager(&manager);  // Gán lại sau khi xóa
@@ -302,7 +290,6 @@ void Game::clean()
 
     delete m_Layer1; m_Layer1 = nullptr;
     delete m_Layer2; m_Layer2 = nullptr;
-    delete m_Layer4; m_Layer4 = nullptr;
 
     delete assets;
 

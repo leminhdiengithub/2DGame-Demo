@@ -29,19 +29,19 @@ public:
 		}
 		
 		if (keystates[SDL_SCANCODE_W]) {
-			transform->velocity.y = -1;
+			transform->velocity.y = -2;
 			sprite->Play("walk_up");
 		}
 		if (keystates[SDL_SCANCODE_S]) {
-			transform->velocity.y = 1;
+			transform->velocity.y = 2;
 			sprite->Play("walk_down");
 		}
 		if (keystates[SDL_SCANCODE_D]) {
-			transform->velocity.x = 1;
+			transform->velocity.x = 2;
 			sprite->Play("walk_right");
 		}
 		if (keystates[SDL_SCANCODE_A]) {
-			transform->velocity.x = -1;
+			transform->velocity.x = -2;
 			sprite->Play("walk_left");
 		}
 		if (keystates[SDL_SCANCODE_K])
