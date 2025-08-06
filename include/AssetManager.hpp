@@ -6,6 +6,7 @@
 #include "Vector2D.hpp"
 #include "ECS/ECS.hpp"
 #include"SDL2/SDL_ttf.h"
+#include"SDL2/SDL_mixer.h"
 
 class AssetManager
 {
@@ -26,9 +27,19 @@ public:
     void AddFont(std::string id, std::string path, int fontSize);
     TTF_Font* GetFont(std::string id);
 
+    void AddMusic(std::string id, const char* path);
+    Mix_Music* GetMusic(std::string id);
+
+    void AddSoundEffect(std::string id, const char* path);
+    Mix_Chunk* GetSoundEffect(std::string id);
+
 private:
     Manager* manager;
     std::map<std::string, SDL_Texture*> textures;
     std::map<std::string, TTF_Font*> fonts;
-    
+    std::map<std::string, Mix_Music*> musics;
+    std::map<std::string, Mix_Chunk*> soundEffects;
+
+    SDL_Color white = { 255, 255, 255, 255 };
+
 };

@@ -3,6 +3,7 @@
 #include"../Game.hpp"
 #include"ECS.hpp"
 #include"Components.hpp"
+#include <cmath>
 
 class KeyboardController : public Component
 {
@@ -12,6 +13,8 @@ public:
 	SpriteComponent *sprite;
     const Uint8* keystates = SDL_GetKeyboardState(NULL);
 
+	Uint32 lastShootTime = 0;
+	Uint32 shootCooldown = 200;
 
     void init() override
     {
@@ -23,6 +26,20 @@ public:
 
 		transform->velocity.x = 0;
 		transform->velocity.y = 0;
+
+		int mouseX, mouseY;
+		Uint32 mouseButtons = SDL_GetMouseState(&mouseX, &mouseY);
+		float deltaX = mouseX + Game::camera.x - transform->position.x;
+		float deltaY = mouseY + Game::camera.y - transform->position.y;
+
+		//normalize a Vector.
+		float length = std::sqrt(deltaX * deltaX + deltaY * deltaY);
+		if (length != 0)
+		{
+			deltaX /= length;
+			deltaY /= length;
+		}
+
 		if (transform->velocity.x == 0 && transform->velocity.y == 0)
 		{
 			sprite->Play("Idle");
@@ -44,9 +61,16 @@ public:
 			transform->velocity.x = -2;
 			sprite->Play("walk_left");
 		}
-		if (keystates[SDL_SCANCODE_K])
-		{
-			sprite->Play("attack");
+		if (mouseButtons & SDL_BUTTON(SDL_BUTTON_LEFT))
+		{   
+			Uint32 currentTime = SDL_GetTicks(); 
+			if (currentTime > lastShootTime + shootCooldown)
+			{
+				Vector2D direction(deltaX, deltaY);
+				float speed = 4.0f;
+				Game::assets->CreateProjectile(transform->position, direction * speed, 200, 2, "projectile");
+				lastShootTime = currentTime;
+			}
 		}	
 	}
 };

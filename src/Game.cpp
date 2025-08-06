@@ -26,6 +26,7 @@ std::vector<Entity*>& Game::getTileMapColliders() { return manager.getGroup(grou
 std::vector<Entity*>& Game::getColiderprojecttiles(){ return manager.getGroup(groupPorjectiles); }
 std::vector<Entity*>& Game::getObjects() { return manager.getGroup(groupObject); }
 std::vector<Entity*>& Game::getLabels()  { return manager.getGroup(groupULlabel); }
+std::vector<Entity*>& Game::getAudios()  { return manager.getGroup(groupAudio); }
 
 Game::Game()
 {}
@@ -54,6 +55,13 @@ void Game::initWindow(const char* title, int xpos, int ypos, int width, int heig
         std::cout << "Error: TTF_Init - " << TTF_GetError() << std::endl;
         SDL_Quit();
         return;
+    }
+
+    // Check SDL_Init() for errors
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        std::cerr << " SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << std::endl;
+        Mix_AllocateChannels(64);
     }
 
     std::cout << " Subssystem Initialised..." << std::endl;
@@ -106,6 +114,9 @@ void Game::setup()
 
     assets->AddFont("arial", "res/font/EvilEmpire-4BBVK.ttf", 16);
 
+    assets->AddMusic("backgroundMusic", "res/sounds/mskts.mp3");
+    assets->AddSoundEffect("projectile", "res/sounds/Projectile_sound.wav" );
+
     m_Layer1 = new Map("terrain", 2, 32);
     m_Layer1->setCollisionTileCodes({});
     m_Layer1->LoadMap("res/gfx/mapFile_Layer1.csv", 30, 20, 8);
@@ -121,19 +132,19 @@ void Game::setup()
     player->addGroup(groupPlayer);
 
     SDL_Color white = { 255, 255, 255, 255 };
-    label->addComponent<ULlabel>(10, 10, "Game_demo","arial", white );
+    label->addComponent<ULlabel>(20, 10, "HealBath","arial", white );
     label->addGroup(groupULlabel);
 
     assets->CreateEnimies(Vector2D(200, 200),160, 160, Vector2D(130,125), 95, 70, 2, "enemy");
 
-
-    assets->CreateProjectile(Vector2D(600,600), Vector2D(2,0) ,200, 2, "projectile");
+    // assets->CreateProjectile(Vector2D(600,600), Vector2D(2,0) ,200, 2, "projectile");
     
     assets->CreateTree(Vector2D(130, 4),96, 53, Vector2D(45, 140), 32, 16, 2, "treeDemo");
     
     assets->CreateRock(Vector2D(100,400),32,32,Vector2D(0,0),32,32,1,"rockDemo");
 
-    song->addComponent<AudioComponent>("res/sounds/mskts.mp3");
+    song->addComponent<AudioComponent>("backgroundMusic", true);
+    song->addGroup(groupAudio);
     
     home = false;
 }
@@ -149,7 +160,7 @@ void Game::handleEvents()
     case SDL_KEYDOWN:
         if (event.key.keysym.sym == SDLK_ESCAPE) 
         {
-			std::cout << "t" << std::endl;
+			// std::cout << "t" << std::endl;
 			/*(game.)*/on = false;
 			pause.on = true;
 		}
@@ -165,13 +176,13 @@ void Game::update()
     manager.refresh();
     manager.update();
 
-    /*if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
+    if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
     {
         song->getComponent<AudioComponent>().playMusic();
     } else if (!on && Mix_PlayingMusic() != 0)
     {
         song->getComponent<AudioComponent>().stopMusic();
-    }*/
+    }
 
     //std::cout << player->getComponent<TransformComponent>().position.x << " + " << player->getComponent<TransformComponent>().position.y << std::endl;
 
@@ -197,21 +208,7 @@ void Game::update()
         if (Collision::AABB(player->getComponent<ColliderComponent>(), o->getComponent<ColliderComponent>()))
         {
             Collision::ResolveCollision(player->getComponent<ColliderComponent>(), o->getComponent<ColliderComponent>());
-        }
-        
-    }
-    
-
-    for ( auto& p : Game::getColiderprojecttiles())
-    {
-        if (Collision::AABB(player->getComponent<ColliderComponent>(), p->getComponent<ColliderComponent>()))
-        {
-            p->destroy();
-        }
-        if (p->getComponent<ProjectileComponent>().isMakedForDestroy())
-        {
-            p->destroy();
-        }
+        }   
     }
 
     camera.x = player->getComponent<TransformComponent>().position.x - 480;
@@ -260,8 +257,10 @@ void Game::clearData()
     gettiles().clear();
     getEnimies().clear();
     getTileMapColliders().clear();
+    getColiderprojecttiles().clear();
     getObjects().clear();
     getLabels().clear();
+    getAudios().clear();
 
     delete m_Layer1; m_Layer1 = nullptr;
     delete m_Layer2; m_Layer2 = nullptr;
@@ -285,8 +284,10 @@ void Game::clean()
     gettiles().clear();
     getEnimies().clear();
     getTileMapColliders().clear();
+    getColiderprojecttiles().clear();
     getLabels().clear();
     getObjects().clear();
+    getAudios().clear();
 
     delete m_Layer1; m_Layer1 = nullptr;
     delete m_Layer2; m_Layer2 = nullptr;

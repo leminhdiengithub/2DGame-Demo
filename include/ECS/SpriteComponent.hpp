@@ -51,6 +51,7 @@ public:
         if(std::string(charName) == "Souls")
         {
             animationManager.addAnimation("Idle", Animation(0, 0, 8, 100));
+            animationManager.addAnimation("Dead", Animation(0, 6, 7 ,100));
         }
         if (std::string(charName) == "projectile")
         {

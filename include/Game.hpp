@@ -53,7 +53,8 @@ public:
         groupColliders,
         groupPorjectiles,
         groupULlabel,
-        groupObject
+        groupObject,
+        groupAudio
     };
 
     static bool isrunning;
@@ -81,4 +82,5 @@ private:
     std::vector<Entity*>& getColiderprojecttiles();
     std::vector<Entity*>& getObjects();
     std::vector<Entity*>& getLabels();
+    std::vector<Entity*>& getAudios();
 };

@@ -1,6 +1,6 @@
 #pragma once
 
-#include"ECS.hpp"
+#include "ECS.hpp"
 #include "Components.hpp"
 #include "../Vector2D.hpp"
 
@@ -8,21 +8,21 @@ class ProjectileComponent : public Component
 {
 public:
     ProjectileComponent(int rng, int sp, Vector2D vel) : range(rng), speed(sp), velocity(vel)
-    {}
+    {
+    }
     ~ProjectileComponent()
-    {}
+    {
+    }
 
     void init() override
     {
-        /* Để có thể sử dụng transfrom và projectile thì entity(projectile) phải được thêm TransformComponent 
+        /* Để có thể sử dụng transfrom và projectile thì entity(projectile) phải được thêm TransformComponent
         và AudioComponent*/
         transfrom = &entity->getComponent<TransformComponent>();
         transfrom->velocity = velocity;
 
-        // Lấy AudioComponent từ entity
-        if (entity->hasComponent<AudioComponent>()) {
-            audio = &entity->getComponent<AudioComponent>();
-        }
+        audio =  &entity->getComponent<AudioComponent>();
+            
     }
 
     void update() override
@@ -32,28 +32,23 @@ public:
         if (distance > range)
         {
             std::cout << "Out of Range" << std::endl;
-            shouldDestroy = true;
-
-        } else if ( transfrom->position.x > Game::camera.x + Game::camera.w ||
-                    transfrom->position.x < Game::camera.x ||
-                    transfrom->position.y > Game::camera.y + Game::camera.h ||
-                    transfrom->position.y < Game::camera.y)
+            entity->destroy();
+        }
+        else if (transfrom->position.x > Game::camera.x + Game::camera.w ||
+                 transfrom->position.x < Game::camera.x ||
+                 transfrom->position.y > Game::camera.y + Game::camera.h ||
+                 transfrom->position.y < Game::camera.y)
         {
             std::cout << "Out of bounds" << std::endl;
-            shouldDestroy = true;
+            entity->destroy();
         }
     }
 
-    bool isMakedForDestroy() const 
-    {
-        return shouldDestroy;
-    }
 private:
-    TransformComponent* transfrom;
-    AudioComponent* audio = nullptr;
+    TransformComponent *transfrom;
+    AudioComponent *audio;  
     int range = 0;
     int speed = 0;
     int distance = 0;
     Vector2D velocity;
-    bool shouldDestroy;
 };
