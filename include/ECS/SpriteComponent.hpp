@@ -91,7 +91,7 @@ public:
     {
         if (animated)
         {
-            srcRect.x = (animationManager.getXAnimIndex() + static_cast<int>((SDL_GetTicks() / animationManager.getSpeed()) % animationManager.getFrames())) * transform->width;
+            srcRect.x = (animationManager.getXAnimIndex() + animationManager.getCurrentFrame()) * transform->width;
             srcRect.y = animationManager.getYAnimIndex() * transform->height;
         }
 
@@ -108,5 +108,10 @@ public:
     void Play(const char* animName)
     {
         animationManager.Play(animName);
+    }
+
+    void playOneshot(const char* animName, bool isOneShot = false)
+    {
+        animationManager.playOneshot(animName, isOneShot);
     }
 };
