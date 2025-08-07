@@ -53,6 +53,7 @@ class Entity
 private:
     Manager& manager;
     bool active = true;
+    bool enabled = true;
     std::vector<std::unique_ptr<Component>> components;
 
     ComponentArray componentArray;
@@ -64,14 +65,21 @@ public:
 
     void update()
     {
+        if (!enabled) return;
         for (auto& c : components) c->update();
     }
     void draw() 
     {
+        if (!enabled) return;
         for (auto& c : components) c->draw();
     }
     bool isActive() const { return active; }
     void destroy() { active = false; }
+
+    // --- NEW ---
+    void setEnabled(bool val) { enabled = val; }
+    bool isEnabled() const { return enabled; }
+    // ------------
 
     bool hasGroup(Group mGroup)
     {

@@ -135,10 +135,10 @@ void Game::setup()
     label->addComponent<ULlabel>(20, 10, "HealBath","arial", white );
     label->addGroup(groupULlabel);
 
-    assets->CreateEnimies(Vector2D(200, 200),160, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(200, 200),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(100, 200),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
 
-    // assets->CreateProjectile(Vector2D(600,600), Vector2D(2,0) ,200, 2, "projectile");
-    
+
     assets->CreateTree(Vector2D(130, 4),96, 53, Vector2D(45, 140), 32, 16, 2, "treeDemo");
     
     assets->CreateRock(Vector2D(100,400),32,32,Vector2D(0,0),32,32,1,"rockDemo");
@@ -210,6 +210,44 @@ void Game::update()
             Collision::ResolveCollision(player->getComponent<ColliderComponent>(), o->getComponent<ColliderComponent>());
         }   
     }
+
+    auto& enemies = Game::getEnimies();
+
+    for (auto& p : Game::getColiderprojecttiles())
+    {
+        for (auto enemyIt = enemies.begin(); enemyIt != enemies.end(); )
+        {
+            Entity* e = *enemyIt;
+
+            if (Collision::AABB(p->getComponent<ColliderComponent>(), e->getComponent<ColliderComponent>()))
+            {
+                p->destroy();
+                e->setEnabled(false);
+                ++enemyIt;
+                break;
+            }
+            else
+            {
+                ++enemyIt;
+            }
+        }
+    }
+
+    for (auto enemyIt = enemies.begin(); enemyIt != enemies.end(); )
+    {
+        Entity* e = *enemyIt;
+        if (!e->isEnabled())
+        {
+            e->destroy();
+            enemyIt = enemies.erase(enemyIt);  // Xóa node khỏi list (an toàn)
+        }
+        else
+        {
+            ++enemyIt;
+        }
+    }
+    
+    
 
     camera.x = player->getComponent<TransformComponent>().position.x - 480;
     camera.y = player->getComponent<TransformComponent>().position.y - 320;
