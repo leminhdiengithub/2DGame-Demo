@@ -52,21 +52,23 @@ public:
         {
             animationManager.addAnimation("Idle", Animation(0, 0, 8, 100));
             animationManager.addAnimation("Dead", Animation(0, 6, 7 ,100));
+            animationManager.Play("Idle");
         }
         if (std::string(charName) == "projectile")
         {
             animationManager.addAnimation("Idle", Animation(0, 0, 6, 100));
+            animationManager.playOneshot("Idle", true);
         }
         if (std::string(charName) == "treeDemo")
         {
             animationManager.addAnimation("Idle", Animation(0, 0, 16, 100));
+            animationManager.Play("Idle");
         }
         if (std::string(charName) == "rockDemo")
         {
             animationManager.addAnimation("Idle", Animation(5, 15, 1, 100));
+            animationManager.Play("Idle");
         }
-        
-        animationManager.Play("Idle");
         setTex(id);
     }
 

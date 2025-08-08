@@ -15,6 +15,7 @@ void AssetManager::CreateEnimies(Vector2D pos, int posH, int posW, Vector2D col,
     enemy.addComponent<TransformComponent>(pos.x, pos.y, posH, posW, scale);
     enemy.addComponent<SpriteComponent>(id, true, "Souls");
     enemy.addComponent<ColliderComponent>(id, col.x, col.y, colW, colH);
+    enemy.addComponent<EnemyComponent>();
     enemy.addComponent<MouseController>();
     enemy.addGroup(Game::groupEnemies);
 }
