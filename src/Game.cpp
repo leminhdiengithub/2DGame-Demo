@@ -212,41 +212,31 @@ void Game::update()
     }
 
     auto& enemies = Game::getEnimies();
+    auto& projectiles = Game::getColiderprojecttiles();
 
-    for (auto& p : Game::getColiderprojecttiles())
-    {
-        for (auto enemyIt = enemies.begin(); enemyIt != enemies.end(); )
-        {
-            Entity* e = *enemyIt;
-
-            if (Collision::AABB(p->getComponent<ColliderComponent>(), e->getComponent<ColliderComponent>()))
-            {
+    // Handle projectile-enemy collisions
+    for (auto& p : projectiles) {
+        for (auto& e : enemies) {
+            if (e->isEnabled() && Collision::AABB(p->getComponent<ColliderComponent>(), e->getComponent<ColliderComponent>())) {
                 p->destroy();
                 e->setEnabled(false);
-                ++enemyIt;
-                break;
-            }
-            else
-            {
-                ++enemyIt;
+                break; // Only one enemy per projectile
             }
         }
     }
 
-    for (auto enemyIt = enemies.begin(); enemyIt != enemies.end(); )
-    {
-        Entity* e = *enemyIt;
-        if (!e->isEnabled())
-        {
-            e->destroy();
-            enemyIt = enemies.erase(enemyIt);  // Xóa node khỏi list (an toàn)
-        }
-        else
-        {
-            ++enemyIt;
-        }
-    }
-    
+    // Remove and destroy all disabled enemies
+    enemies.erase(
+        std::remove_if(enemies.begin(), enemies.end(),
+            [](Entity* e) {
+                if (!e->isEnabled()) {
+                    e->destroy();
+                    return true;
+                }
+                return false;
+            }),
+        enemies.end()
+    );
     
 
     camera.x = player->getComponent<TransformComponent>().position.x - 480;

@@ -72,6 +72,8 @@ private:
     Map* m_Layer2 = nullptr;
 
     Entity* player = nullptr;
+    Entity* getPlayer() { return player; }
+
     Entity* song = nullptr;
     Entity* label = nullptr;
 
