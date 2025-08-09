@@ -79,7 +79,7 @@ private:
 
     std::vector<Entity*>& gettiles();
     std::vector<Entity*>& getPlayers();
-    std::vector<Entity*>& getEnimies();
+    std::vector<Entity*>& getEnemies();
     std::vector<Entity*>& getTileMapColliders();
     std::vector<Entity*>& getColiderprojecttiles();
     std::vector<Entity*>& getObjects();

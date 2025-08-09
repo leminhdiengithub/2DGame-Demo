@@ -21,7 +21,7 @@ AssetManager* Game::assets = new AssetManager(&manager);
 
 std::vector<Entity*>& Game::gettiles() {return manager.getGroup(groupMap); }
 std::vector<Entity*>& Game::getPlayers() { return manager.getGroup(groupPlayer); }
-std::vector<Entity*>& Game::getEnimies() { return manager.getGroup(groupEnemies); }
+std::vector<Entity*>& Game::getEnemies() { return manager.getGroup(groupEnemies); }
 std::vector<Entity*>& Game::getTileMapColliders() { return manager.getGroup(groupColliders); } //Col TileMap
 std::vector<Entity*>& Game::getColiderprojecttiles(){ return manager.getGroup(groupPorjectiles); }
 std::vector<Entity*>& Game::getObjects() { return manager.getGroup(groupObject); }
@@ -136,7 +136,7 @@ void Game::setup()
     label->addGroup(groupULlabel);
 
     assets->CreateEnimies(Vector2D(200, 200),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
-    assets->CreateEnimies(Vector2D(100, 200),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(584 ,-43),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
 
 
     assets->CreateTree(Vector2D(130, 4),96, 53, Vector2D(45, 140), 32, 16, 2, "treeDemo");
@@ -176,17 +176,17 @@ void Game::update()
     manager.refresh();
     manager.update();
 
-    if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
-    {
-        song->getComponent<AudioComponent>().playMusic();
-    } else if (!on && Mix_PlayingMusic() != 0)
-    {
-        song->getComponent<AudioComponent>().stopMusic();
-    }
+    // if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
+    // {
+    //     song->getComponent<AudioComponent>().playMusic();
+    // } else if (!on && Mix_PlayingMusic() != 0)
+    // {
+    //     song->getComponent<AudioComponent>().stopMusic();
+    // }
 
     //std::cout << player->getComponent<TransformComponent>().position.x << " + " << player->getComponent<TransformComponent>().position.y << std::endl;
 
-    for (auto& e : Game::getEnimies())
+    for (auto& e : Game::getEnemies())
     {        
         if (Collision::AABB(player->getComponent<ColliderComponent>(), e->getComponent<ColliderComponent>()))
         {
@@ -211,33 +211,23 @@ void Game::update()
         }   
     }
 
-    auto& enemies = Game::getEnimies();
+    auto& enemies = Game::getEnemies();
     auto& projectiles = Game::getColiderprojecttiles();
 
-    // Handle projectile-enemy collisions
     for (auto& p : projectiles) {
         for (auto& e : enemies) {
-            if (e->isEnabled() && Collision::AABB(p->getComponent<ColliderComponent>(), e->getComponent<ColliderComponent>())) {
+            if (e->isEnabled() && Collision::AABB(
+                    p->getComponent<ColliderComponent>(), 
+                    e->getComponent<ColliderComponent>())) 
+            {
                 p->destroy();
-                e->setEnabled(false);
-                break; // Only one enemy per projectile
+                e->getComponent<EnemyComponent>().healbath -= 1;
+                e->getComponent<EnemyComponent>().isDying = true;
+                e->getComponent<EnemyComponent>().isHiting = true;
+                break;
             }
         }
     }
-
-    // Remove and destroy all disabled enemies
-    enemies.erase(
-        std::remove_if(enemies.begin(), enemies.end(),
-            [](Entity* e) {
-                if (!e->isEnabled()) {
-                    e->destroy();
-                    return true;
-                }
-                return false;
-            }),
-        enemies.end()
-    );
-    
 
     camera.x = player->getComponent<TransformComponent>().position.x - 480;
     camera.y = player->getComponent<TransformComponent>().position.y - 320;
@@ -267,7 +257,7 @@ void Game::render()
     for (auto& d : drawables) { d->draw(); }
 
     for (auto& c : Game::getTileMapColliders()) { c->draw(); }
-    for (auto& e : Game::getEnimies()) { e->draw(); }
+    for (auto& e : Game::getEnemies()) { e->draw(); }
     for (auto& p : Game::getColiderprojecttiles()) { p->draw(); }
     for (auto& l : Game::getLabels()) { l->draw(); }
 
@@ -283,7 +273,7 @@ void Game::clearData()
 
     getPlayers().clear();
     gettiles().clear();
-    getEnimies().clear();
+    getEnemies().clear();
     getTileMapColliders().clear();
     getColiderprojecttiles().clear();
     getObjects().clear();
@@ -310,7 +300,7 @@ void Game::clean()
 
     getPlayers().clear();
     gettiles().clear();
-    getEnimies().clear();
+    getEnemies().clear();
     getTileMapColliders().clear();
     getColiderprojecttiles().clear();
     getLabels().clear();
