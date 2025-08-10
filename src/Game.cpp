@@ -190,7 +190,8 @@ void Game::update()
     {        
         if (Collision::AABB(player->getComponent<ColliderComponent>(), e->getComponent<ColliderComponent>()))
         {
-            Collision::ResolveCollision(player->getComponent<ColliderComponent>(), e->getComponent<ColliderComponent>());
+            e->getComponent<EnemyComponent>().isTarget = true;
+            break;
         }
     }
     
@@ -227,8 +228,7 @@ void Game::update()
                 break;
             }
         }
-    }
-
+    } 
     camera.x = player->getComponent<TransformComponent>().position.x - 480;
     camera.y = player->getComponent<TransformComponent>().position.y - 320;
 

@@ -19,8 +19,10 @@ public:
     int healbath = 3;
     bool hited = false;
     bool deathStarted = false;
+    bool targeted = false;
     bool isHiting = false;
     bool isDying = false;
+    bool isTarget = false;
     Uint32 currentTime;
     Uint32 lastTime = 0;
     Uint32 coolTime = 500;
@@ -40,7 +42,7 @@ public:
     }
 
     void update() override
-    {        
+    {   
         if (isDying && healbath <= 0) {
             DeadEnemy();
             return;
@@ -51,6 +53,12 @@ public:
             return;
         }
 
+        if (isTarget)
+        {
+            EnemyTarget();
+            return;
+        }
+        
         // Only move if not dying or being hit
         if (!deathStarted && !hited) {
             transform->position.x += transform->velocity.x;
@@ -100,13 +108,34 @@ public:
             isHiting = false;
             // Resume movement after hit
             if (sprite->spriteFlip == SDL_FLIP_HORIZONTAL)
-            {
                 transform->velocity.x = -speed;
-            } else 
-            {
+            else 
                 transform->velocity.x = speed;
-            }
             sprite->Play("walk");
         }
     }
+
+    void EnemyTarget()
+    {
+        currentTime = SDL_GetTicks();
+        if (!targeted)
+        {
+            sprite->Play("Idle");
+            targeted = true;
+            lastTime = currentTime;
+            transform->velocity.x = 0;
+        }
+
+        if (targeted && currentTime > lastTime + coolTime)
+        {
+            targeted = false;
+            isTarget = false;
+            // Resume movement
+            if (sprite->spriteFlip == SDL_FLIP_HORIZONTAL)
+                transform->velocity.x = -speed;
+            else 
+                transform->velocity.x = speed;
+            sprite->Play("walk");
+        }
+    }    
 };
