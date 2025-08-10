@@ -5,7 +5,7 @@
 class AnimationManager
 {
 private:
-    std::map<std::string, Animation> animations;
+    std::map<std::string, Animation> animations;// const char* to std::string
     int xAnimIndex = 0;
     int yAnimIndex = 0;
     int frames = 0;
