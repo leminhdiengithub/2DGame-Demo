@@ -40,8 +40,19 @@ public:
     }
 
     void update() override
-    {
-        if (!deathStarted && !hited ) {
+    {        
+        if (isDying && healbath <= 0) {
+            DeadEnemy();
+            return;
+        }
+
+        if (isHiting) {
+            hitEnemy();
+            return;
+        }
+
+        // Only move if not dying or being hit
+        if (!deathStarted && !hited) {
             transform->position.x += transform->velocity.x;
 
             if (transform->position.x >= startX + range) {
@@ -52,37 +63,27 @@ public:
                 sprite->spriteFlip = SDL_FLIP_NONE;
                 transform->velocity.x = speed;
             }
-            sprite->Play("Idle");
-        }
-
-        if (isHiting == true)
-        {
-            hitEnemy();
-            return;
-        }
-        if (isDying == true && healbath <= 0)
-        {
-            DeadEnemy();
-            return;
         }
     }
+
     void DeadEnemy() 
     {
         currentTime = SDL_GetTicks();
 
         if (!deathStarted) {
-            // Bắt đầu animation chết
             sprite->playOneshot("Dead", true);
             deathStarted = true;
             lastTime = currentTime;
             transform->velocity.x = 0;
         }
-        // Sau khi đủ thời gian -> hủy entity
+        // Destroy entity after animation
         if (deathStarted && currentTime > lastTime + coolTime) 
         {
             entity->destroy();
+            isDying = false; // Reset dying flag (optional, since entity is destroyed)
         }
     }
+
     void hitEnemy()
     {
         currentTime = SDL_GetTicks();
@@ -97,6 +98,7 @@ public:
         {
             hited = false;
             isHiting = false;
+            // Resume movement after hit
             if (sprite->spriteFlip == SDL_FLIP_HORIZONTAL)
             {
                 transform->velocity.x = -speed;
@@ -104,6 +106,7 @@ public:
             {
                 transform->velocity.x = speed;
             }
+            sprite->Play("walk");
         }
     }
 };

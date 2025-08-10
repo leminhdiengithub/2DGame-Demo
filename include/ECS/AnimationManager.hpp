@@ -5,7 +5,7 @@
 class AnimationManager
 {
 private:
-    std::map<const char*, Animation> animations;
+    std::map<std::string, Animation> animations;
     int xAnimIndex = 0;
     int yAnimIndex = 0;
     int frames = 0;
@@ -13,31 +13,36 @@ private:
     
     bool oneShot = false;
     Uint32 startTime = 0;
+    const char* currentAnimName = nullptr;
 
 public:
     AnimationManager() = default;
 
     void addAnimation(const char* name, Animation anim)
     {
-        animations.emplace(name, anim);
+        animations.emplace(std::string(name), anim);
     }
 
     void Play(const char* animName)
     {
-        frames = animations[animName].frames;
-        xAnimIndex = animations[animName].xIndex;
-        yAnimIndex = animations[animName].yIndex;
-        speed = animations[animName].speed;
+        std::string key(animName);
+        frames = animations[key].frames;
+        xAnimIndex = animations[key].xIndex;
+        yAnimIndex = animations[key].yIndex;
+        speed = animations[key].speed;
+        oneShot = false;
+        startTime = SDL_GetTicks(); // reset frame
     }
 
     void playOneshot(const char* animName, bool isOneShot = false)
     {
-        frames = animations[animName].frames;
-        xAnimIndex = animations[animName].xIndex;
-        yAnimIndex = animations[animName].yIndex;
-        speed = animations[animName].speed;
+        std::string key(animName);
+        frames = animations[key].frames;
+        xAnimIndex = animations[key].xIndex;
+        yAnimIndex = animations[key].yIndex;
+        speed = animations[key].speed;
         oneShot = isOneShot;
-        startTime = SDL_GetTicks(); // đánh dấu thời gian bắt đầu
+        startTime = SDL_GetTicks();
     }
 
     int getCurrentFrame() const
