@@ -27,7 +27,7 @@ public:
     Uint32 lastTime = 0;
     Uint32 coolTime = 500;
 
-    EnemyComponent(float moveSpeed = 1.0f, float moveRange = 100.0f) : speed(moveSpeed), range(moveRange)
+    EnemyComponent(float moveSpeed = 0.5f, float moveRange = 100.0f) : speed(moveSpeed), range(moveRange)
     {}
 
     void init() override

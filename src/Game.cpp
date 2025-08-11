@@ -135,13 +135,26 @@ void Game::setup()
     label->addComponent<ULlabel>(20, 10, "HealBath","arial", white );
     label->addGroup(groupULlabel);
 
-    assets->CreateEnimies(Vector2D(200, 200),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
-    assets->CreateEnimies(Vector2D(584 ,-43),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(400, 200),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(884 ,-43),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(81 ,661),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(710 ,861),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(1321 ,178),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(1154 ,682),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
 
-
-    assets->CreateTree(Vector2D(130, 4),96, 53, Vector2D(45, 140), 32, 16, 2, "treeDemo");
+    assets->CreateTree(Vector2D(72, 37),96, 53, Vector2D(45, 140), 16, 16, 2, "treeDemo");
+    assets->CreateTree(Vector2D(161, 9),96, 53, Vector2D(45, 140), 16, 16, 2, "treeDemo");
+    assets->CreateTree(Vector2D(274, 13),96, 53, Vector2D(45, 140), 16, 16, 2, "treeDemo");
+    assets->CreateTree(Vector2D(401, 9),96, 53, Vector2D(45, 140), 16, 16, 2, "treeDemo");
+    assets->CreateTree(Vector2D(1490, 248),96, 53, Vector2D(45, 140), 16, 16, 2, "treeDemo");
+    assets->CreateTree(Vector2D(1281, 257),96, 53, Vector2D(45, 140), 16, 16, 2, "treeDemo");
     
-    assets->CreateRock(Vector2D(100,400),32,32,Vector2D(0,0),32,32,1,"rockDemo");
+    assets->CreateRock(Vector2D(81,325),32,32,Vector2D(0,0),32,32,1,"rockDemo");
+    assets->CreateRock(Vector2D(378,195),32,32,Vector2D(0,0),32,32,1,"rockDemo");
+    assets->CreateRock(Vector2D(279,311),32,32,Vector2D(0,0),32,32,1,"rockDemo");
+    assets->CreateRock(Vector2D(90,418),32,32,Vector2D(0,0),32,32,1,"rockDemo");
+    assets->CreateRock(Vector2D(160,396),32,32,Vector2D(0,0),32,32,1,"rockDemo");
+
 
     song->addComponent<AudioComponent>("backgroundMusic", true);
     song->addGroup(groupAudio);
@@ -228,7 +241,7 @@ void Game::update()
                 break;
             }
         }
-    } 
+    }
     camera.x = player->getComponent<TransformComponent>().position.x - 480;
     camera.y = player->getComponent<TransformComponent>().position.y - 320;
 

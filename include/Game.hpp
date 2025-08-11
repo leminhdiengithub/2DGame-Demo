@@ -64,15 +64,15 @@ public:
     bool on = false;
     int cnt = 0;
     bool isMusicPlaying = true;
+
+    Entity* player = nullptr;
+    Entity* getPlayer() { return player; }
     
 private:
     SDL_Window* window;
 
     Map* m_Layer1 = nullptr;
     Map* m_Layer2 = nullptr;
-
-    Entity* player = nullptr;
-    Entity* getPlayer() { return player; }
 
     Entity* song = nullptr;
     Entity* label = nullptr;

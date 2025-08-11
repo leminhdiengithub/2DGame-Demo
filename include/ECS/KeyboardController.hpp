@@ -14,7 +14,7 @@ public:
     const Uint8* keystates = SDL_GetKeyboardState(NULL);
 
 	Uint32 lastShootTime = 0;
-	Uint32 shootCooldown = 200;
+	Uint32 shootCooldown = 300;
 
     void init() override
     {
@@ -67,7 +67,7 @@ public:
 			if (currentTime > lastShootTime + shootCooldown)
 			{
 				Vector2D direction(deltaX, deltaY);
-				float speed = 4.0f;
+				float speed = 2.0f;
 				Game::assets->CreateProjectile(transform->position, direction * speed, 200, 2, "projectile");
 				lastShootTime = currentTime;
 			}

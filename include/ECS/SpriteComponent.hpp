@@ -59,7 +59,7 @@ public:
         }
         if (std::string(charName) == "projectile")
         {
-            animationManager.addAnimation("Idle", Animation(0, 0, 6, 100));
+            animationManager.addAnimation("Idle", Animation(0, 0, 5, 100));
             animationManager.playOneshot("Idle", true);
             setTex(id);
         }
