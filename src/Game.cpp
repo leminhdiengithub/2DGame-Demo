@@ -135,7 +135,7 @@ void Game::setup()
     label->addComponent<ULlabel>(20, 10, "HealBath","arial", white );
     label->addGroup(groupULlabel);
 
-    assets->CreateEnimies(Vector2D(400, 200),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(500, 200),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
     assets->CreateEnimies(Vector2D(884 ,-43),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
     assets->CreateEnimies(Vector2D(81 ,661),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
     assets->CreateEnimies(Vector2D(710 ,861),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
@@ -199,12 +199,36 @@ void Game::update()
 
     //std::cout << player->getComponent<TransformComponent>().position.x << " + " << player->getComponent<TransformComponent>().position.y << std::endl;
 
+    float playerPosX = player->getComponent<TransformComponent>().position.x;
+    float playerPosY = player->getComponent<TransformComponent>().position.y;
+    // player center
+    float playerCenterX = playerPosX + (player->getComponent<TransformComponent>().width * player->getComponent<TransformComponent>().scale) / 2.0f;
+    float playerCenterY = playerPosY + (player->getComponent<TransformComponent>().height * player->getComponent<TransformComponent>().scale) / 2.0f;
+
     for (auto& e : Game::getEnemies())
-    {        
-        if (Collision::AABB(player->getComponent<ColliderComponent>(), e->getComponent<ColliderComponent>()))
+    {
+        auto& enemyTransform = e->getComponent<TransformComponent>();
+
+        // Enemy center
+        float enemyCenterX = enemyTransform.position.x + (enemyTransform.width * enemyTransform.scale) / 2.0f;
+        float enemyCenterY = enemyTransform.position.y + (enemyTransform.height * enemyTransform.scale) / 2.0f;
+
+        float dx = enemyCenterX - playerCenterX;
+        float dy = enemyCenterY - playerCenterY;
+        float distance = std::sqrt(dx * dx + dy * dy);
+
+        auto& enemyComp = e->getComponent<EnemyComponent>();
+
+        if (distance >= 380.0f && distance <= 400.0f)
         {
-            e->getComponent<EnemyComponent>().isTarget = true;
-            break;
+            enemyComp.isTarget = true;
+        }
+        else if (distance < 380.0f)
+        {
+            enemyComp.EnemyAttack(
+            Vector2D(playerCenterX, playerCenterY), // player center
+            Vector2D(enemyCenterX, enemyCenterY) // enemy center
+            );    
         }
     }
     
@@ -228,20 +252,20 @@ void Game::update()
     auto& enemies = Game::getEnemies();
     auto& projectiles = Game::getColiderprojecttiles();
 
-    for (auto& p : projectiles) {
-        for (auto& e : enemies) {
-            if (e->isEnabled() && Collision::AABB(
-                    p->getComponent<ColliderComponent>(), 
-                    e->getComponent<ColliderComponent>())) 
-            {
-                p->destroy();
-                e->getComponent<EnemyComponent>().healbath -= 1;
-                e->getComponent<EnemyComponent>().isDying = true;
-                e->getComponent<EnemyComponent>().isHiting = true;
-                break;
-            }
-        }
-    }
+    // for (auto& p : projectiles) {
+    //     for (auto& e : enemies) {
+    //         if (e->isEnabled() && Collision::AABB(
+    //                 p->getComponent<ColliderComponent>(), 
+    //                 e->getComponent<ColliderComponent>())) 
+    //         {
+    //             p->destroy();
+    //             e->getComponent<EnemyComponent>().healbath -= 1;
+    //             e->getComponent<EnemyComponent>().isDying = true;
+    //             e->getComponent<EnemyComponent>().isHiting = true;
+    //             break;
+    //         }
+    //     }
+    // }
     camera.x = player->getComponent<TransformComponent>().position.x - 480;
     camera.y = player->getComponent<TransformComponent>().position.y - 320;
 

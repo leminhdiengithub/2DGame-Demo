@@ -137,5 +137,41 @@ public:
                 transform->velocity.x = speed;
             sprite->Play("walk");
         }
-    }    
+    } 
+    
+    void EnemyAttack(const Vector2D& playerCenter, const Vector2D& enemyCenter) 
+    {
+        currentTime = SDL_GetTicks();
+        Uint32 coolTimeShoot = 1000;
+
+        //Enemy center
+        float enemyCenterX = transform->position.x + (transform->width * transform->scale) / 2.0f;
+        float enemyCenterY = transform->position.y + (transform->height * transform->scale) / 2.0f;
+
+        float deltaX = playerCenter.x - enemyCenterX;
+        float deltaY = playerCenter.y - enemyCenterY;
+
+        // Chuẩn hóa vector
+        float length = std::sqrt(deltaX * deltaX + deltaY * deltaY);
+        if (length != 0)
+        {
+            deltaX /= length;
+            deltaY /= length;
+        }
+
+        // Shoot
+        if (currentTime > lastTime + coolTimeShoot)
+        {
+            transform->velocity.x = 0;
+            sprite->playOneshot("Attack", true);
+            Vector2D direction(deltaX, deltaY);
+            float speed = 3.0f;
+            Game::assets->CreateProjectile(
+                enemyCenter,
+                direction * speed,
+                200, 2, "projectile"
+            );
+            lastTime = currentTime;
+        } 
+    }
 };

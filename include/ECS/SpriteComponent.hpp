@@ -52,8 +52,9 @@ public:
         {
             animationManager.addAnimation("Idle", Animation(0, 0, 8, 100));
             animationManager.addAnimation("walk", Animation(0, 1, 8, 100));
-            animationManager.addAnimation("Dead", Animation(0, 6, 7 ,100));
+            animationManager.addAnimation("Attack", Animation(0, 2, 13, 100));
             animationManager.addAnimation("Hit", Animation(0, 5, 5, 100));
+            animationManager.addAnimation("Dead", Animation(0, 6, 7 ,100));
             animationManager.Play("walk");
             setTex(id);
         }
