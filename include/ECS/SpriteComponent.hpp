@@ -60,7 +60,15 @@ public:
         }
         if (std::string(charName) == "projectile")
         {
-            animationManager.addAnimation("Idle", Animation(0, 0, 5, 100));
+            animationManager.addAnimation("Idle", Animation(0, 8, 6, 50));
+            animationManager.addAnimation("destroy", Animation(5, 8, 6, 50));
+            animationManager.playOneshot("Idle", true);
+            setTex(id);
+        }
+        if (std::string(charName) == "projectileP")
+        {
+            animationManager.addAnimation("Idle", Animation(0, 0, 6, 50));
+            animationManager.addAnimation("destroy", Animation(5, 0, 6, 50));
             animationManager.playOneshot("Idle", true);
             setTex(id);
         }

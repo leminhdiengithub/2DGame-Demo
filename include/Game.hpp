@@ -51,7 +51,8 @@ public:
         groupPlayer,
         groupEnemies,
         groupColliders,
-        groupPorjectiles,
+        groupProjectiles,
+        groupProjectilesP,
         groupULlabel,
         groupObject,
         groupAudio
@@ -82,6 +83,7 @@ private:
     std::vector<Entity*>& getEnemies();
     std::vector<Entity*>& getTileMapColliders();
     std::vector<Entity*>& getColiderprojecttiles();
+    std::vector<Entity*>& getColiderprojecttilesP();
     std::vector<Entity*>& getObjects();
     std::vector<Entity*>& getLabels();
     std::vector<Entity*>& getAudios();

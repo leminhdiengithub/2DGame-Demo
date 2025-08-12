@@ -23,7 +23,8 @@ std::vector<Entity*>& Game::gettiles() {return manager.getGroup(groupMap); }
 std::vector<Entity*>& Game::getPlayers() { return manager.getGroup(groupPlayer); }
 std::vector<Entity*>& Game::getEnemies() { return manager.getGroup(groupEnemies); }
 std::vector<Entity*>& Game::getTileMapColliders() { return manager.getGroup(groupColliders); } //Col TileMap
-std::vector<Entity*>& Game::getColiderprojecttiles(){ return manager.getGroup(groupPorjectiles); }
+std::vector<Entity*>& Game::getColiderprojecttiles(){ return manager.getGroup(groupProjectiles); }
+std::vector<Entity*>& Game::getColiderprojecttilesP(){ return manager.getGroup(groupProjectilesP); }
 std::vector<Entity*>& Game::getObjects() { return manager.getGroup(groupObject); }
 std::vector<Entity*>& Game::getLabels()  { return manager.getGroup(groupULlabel); }
 std::vector<Entity*>& Game::getAudios()  { return manager.getGroup(groupAudio); }
@@ -107,7 +108,8 @@ void Game::setup()
     assets->AddTexture("terrain2","res/gfx/TX Tileset Wall.png");
     assets->AddTexture("player", "res/gfx/player.png");//
     assets->AddTexture("enemy","res/gfx/Enemy.png");
-    assets->AddTexture("projectile","res/gfx/proje.png");
+    assets->AddTexture("projectile","res/gfx/projectile.png");
+    assets->AddTexture("projectileP","res/gfx/projectile.png"); 
 
     assets->AddTexture("treeDemo","res/gfx/Pine Tree - GREEN  - Spritesheet.png");
     assets->AddTexture("rockDemo","res/gfx/TX Props.png");
@@ -116,6 +118,7 @@ void Game::setup()
 
     assets->AddMusic("backgroundMusic", "res/sounds/mskts.mp3");
     assets->AddSoundEffect("projectile", "res/sounds/Projectile_sound.wav" );
+    assets->AddSoundEffect("projectileP", "res/sounds/Projectile_sound.wav" );
 
     m_Layer1 = new Map("terrain", 2, 32);
     m_Layer1->setCollisionTileCodes({});
@@ -250,22 +253,22 @@ void Game::update()
     }
 
     auto& enemies = Game::getEnemies();
-    auto& projectiles = Game::getColiderprojecttiles();
+    auto& projectilesP = Game::getColiderprojecttilesP();
 
-    // for (auto& p : projectiles) {
-    //     for (auto& e : enemies) {
-    //         if (e->isEnabled() && Collision::AABB(
-    //                 p->getComponent<ColliderComponent>(), 
-    //                 e->getComponent<ColliderComponent>())) 
-    //         {
-    //             p->destroy();
-    //             e->getComponent<EnemyComponent>().healbath -= 1;
-    //             e->getComponent<EnemyComponent>().isDying = true;
-    //             e->getComponent<EnemyComponent>().isHiting = true;
-    //             break;
-    //         }
-    //     }
-    // }
+    for (auto& p : projectilesP) {
+        for (auto& e : enemies) {
+            if (e->isEnabled() && Collision::AABB(
+                    p->getComponent<ColliderComponent>(), 
+                    e->getComponent<ColliderComponent>())) 
+            {
+                p->destroy();
+                e->getComponent<EnemyComponent>().healbath -= 1;
+                e->getComponent<EnemyComponent>().isDying = true;
+                e->getComponent<EnemyComponent>().isHiting = true;
+                break;
+            }
+        }
+    }
     camera.x = player->getComponent<TransformComponent>().position.x - 480;
     camera.y = player->getComponent<TransformComponent>().position.y - 320;
 
@@ -296,6 +299,7 @@ void Game::render()
     for (auto& c : Game::getTileMapColliders()) { c->draw(); }
     for (auto& e : Game::getEnemies()) { e->draw(); }
     for (auto& p : Game::getColiderprojecttiles()) { p->draw(); }
+    for (auto& pP : Game::getColiderprojecttilesP()) { pP->draw(); }    
     for (auto& l : Game::getLabels()) { l->draw(); }
 
     SDL_RenderPresent(renderer);
@@ -313,6 +317,7 @@ void Game::clearData()
     getEnemies().clear();
     getTileMapColliders().clear();
     getColiderprojecttiles().clear();
+    getColiderprojecttilesP().clear();
     getObjects().clear();
     getLabels().clear();
     getAudios().clear();
@@ -340,6 +345,7 @@ void Game::clean()
     getEnemies().clear();
     getTileMapColliders().clear();
     getColiderprojecttiles().clear();
+    getColiderprojecttilesP().clear();
     getLabels().clear();
     getObjects().clear();
     getAudios().clear();

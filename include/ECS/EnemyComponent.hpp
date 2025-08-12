@@ -16,7 +16,7 @@ public:
     float startX;
     float speed;
     float range;
-    int healbath = 3;
+    int healbath = 7;
     bool hited = false;
     bool deathStarted = false;
     bool targeted = false;
@@ -142,7 +142,7 @@ public:
     void EnemyAttack(const Vector2D& playerCenter, const Vector2D& enemyCenter) 
     {
         currentTime = SDL_GetTicks();
-        Uint32 coolTimeShoot = 1000;
+        Uint32 coolTimeShoot = 1300;
 
         //Enemy center
         float enemyCenterX = transform->position.x + (transform->width * transform->scale) / 2.0f;
@@ -169,7 +169,7 @@ public:
             Game::assets->CreateProjectile(
                 enemyCenter,
                 direction * speed,
-                200, 2, "projectile"
+                150, 1, "projectile"
             );
             lastTime = currentTime;
         } 

@@ -16,18 +16,29 @@ void AssetManager::CreateEnimies(Vector2D pos, int posH, int posW, Vector2D col,
     enemy.addComponent<SpriteComponent>(id, true, "Souls");
     enemy.addComponent<ColliderComponent>(id, col.x, col.y, colW, colH);
     enemy.addComponent<EnemyComponent>();
-    enemy.addComponent<MouseController>();
+    // enemy.addComponent<MouseController>();
     enemy.addGroup(Game::groupEnemies);
 }
 void AssetManager::CreateProjectile(Vector2D pos, Vector2D vel, int range, int speed, std::string id)
 {
     auto &projectle(manager->addEntity());
-    projectle.addComponent<TransformComponent>(pos.x, pos.y, 32, 32, 1);
+    projectle.addComponent<TransformComponent>(pos.x, pos.y, 64, 64, 0.75);
     projectle.addComponent<SpriteComponent>(id, true, "projectile");
     projectle.addComponent<AudioComponent>(id, false );
     projectle.addComponent<ProjectileComponent>(range, speed, vel);
     projectle.addComponent<ColliderComponent>("projectile");
-    projectle.addGroup(Game::groupPorjectiles);
+    projectle.addGroup(Game::groupProjectiles);
+    projectle.getComponent<AudioComponent>().playSoundEffect();
+}
+void AssetManager::CreateProjectileP(Vector2D pos, Vector2D vel, int range, int speed, std::string id)
+{
+    auto &projectle(manager->addEntity());
+    projectle.addComponent<TransformComponent>(pos.x, pos.y, 64, 64, 0.75);
+    projectle.addComponent<SpriteComponent>(id, true, "projectileP");
+    projectle.addComponent<AudioComponent>(id, false );
+    projectle.addComponent<ProjectileComponent>(range, speed, vel);
+    projectle.addComponent<ColliderComponent>("projectileP");
+    projectle.addGroup(Game::groupProjectilesP);
     projectle.getComponent<AudioComponent>().playSoundEffect();
 }
 
