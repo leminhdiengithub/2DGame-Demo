@@ -113,6 +113,7 @@ void Game::setup()
 
     assets->AddTexture("treeDemo","res/gfx/Pine Tree - GREEN  - Spritesheet.png");
     assets->AddTexture("rockDemo","res/gfx/TX Props.png");
+    assets->AddTexture("boxDemo","res/gfx/TX Props.png");
 
     assets->AddFont("arial", "res/font/EvilEmpire-4BBVK.ttf", 16);
 
@@ -138,26 +139,27 @@ void Game::setup()
     label->addComponent<ULlabel>(20, 10, "HealBath","arial", white );
     label->addGroup(groupULlabel);
 
-    assets->CreateEnimies(Vector2D(500, 200),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
-    assets->CreateEnimies(Vector2D(884 ,-43),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
-    assets->CreateEnimies(Vector2D(81 ,661),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
-    assets->CreateEnimies(Vector2D(710 ,861),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
-    assets->CreateEnimies(Vector2D(1321 ,178),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
-    assets->CreateEnimies(Vector2D(1154 ,682),128, 160, Vector2D(130,125), 95, 70, 2, "enemy");
+    assets->CreateEnimies(Vector2D(500, 200), "enemy");
+    assets->CreateEnimies(Vector2D(884 ,-43), "enemy");
+    assets->CreateEnimies(Vector2D(81 ,661), "enemy");
+    assets->CreateEnimies(Vector2D(710 ,861), "enemy");
+    assets->CreateEnimies(Vector2D(1321 ,178), "enemy");
+    assets->CreateEnimies(Vector2D(1154 ,682), "enemy");
 
-    assets->CreateTree(Vector2D(72, 37),96, 53, Vector2D(45, 140), 16, 16, 2, "treeDemo");
-    assets->CreateTree(Vector2D(161, 9),96, 53, Vector2D(45, 140), 16, 16, 2, "treeDemo");
-    assets->CreateTree(Vector2D(274, 13),96, 53, Vector2D(45, 140), 16, 16, 2, "treeDemo");
-    assets->CreateTree(Vector2D(401, 9),96, 53, Vector2D(45, 140), 16, 16, 2, "treeDemo");
-    assets->CreateTree(Vector2D(1490, 248),96, 53, Vector2D(45, 140), 16, 16, 2, "treeDemo");
-    assets->CreateTree(Vector2D(1281, 257),96, 53, Vector2D(45, 140), 16, 16, 2, "treeDemo");
+    assets->CreateTree(Vector2D(72, 37), "treeDemo");
+    assets->CreateTree(Vector2D(161, 9), "treeDemo");
+    assets->CreateTree(Vector2D(274, 13), "treeDemo");
+    assets->CreateTree(Vector2D(401, 9), "treeDemo");
+    assets->CreateTree(Vector2D(1490, 248), "treeDemo");
+    assets->CreateTree(Vector2D(1281, 257), "treeDemo");
     
-    assets->CreateRock(Vector2D(81,325),32,32,Vector2D(0,0),32,32,1,"rockDemo");
-    assets->CreateRock(Vector2D(378,195),32,32,Vector2D(0,0),32,32,1,"rockDemo");
-    assets->CreateRock(Vector2D(279,311),32,32,Vector2D(0,0),32,32,1,"rockDemo");
-    assets->CreateRock(Vector2D(90,418),32,32,Vector2D(0,0),32,32,1,"rockDemo");
-    assets->CreateRock(Vector2D(160,396),32,32,Vector2D(0,0),32,32,1,"rockDemo");
+    assets->CreateRock(Vector2D(81,325),"rockDemo");
+    assets->CreateRock(Vector2D(378,195),"rockDemo");
+    assets->CreateRock(Vector2D(279,311),"rockDemo");
+    assets->CreateRock(Vector2D(90,418),"rockDemo");
+    assets->CreateRock(Vector2D(160,396),"rockDemo");
 
+    assets->CreateBox(Vector2D(1060, 382), "boxDemo");
 
     song->addComponent<AudioComponent>("backgroundMusic", true);
     song->addGroup(groupAudio);

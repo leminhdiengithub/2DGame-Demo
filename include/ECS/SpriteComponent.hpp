@@ -84,6 +84,12 @@ public:
             animationManager.Play("Idle");
             setTex(id);
         }
+        if (std::string(charName) == "boxDemo")
+        {
+            animationManager.addAnimation("Idle", Animation(3, 0, 1, 100));
+            animationManager.Play("Idle");
+            setTex(id);
+        }
     }
 
     ~SpriteComponent()

@@ -9,12 +9,12 @@ AssetManager::~AssetManager()
 {
 }
 
-void AssetManager::CreateEnimies(Vector2D pos, int posH, int posW, Vector2D col, int colH, int colW, float scale, std::string id)
+void AssetManager::CreateEnimies(Vector2D pos, std::string id)
 {
     auto &enemy(manager->addEntity());
-    enemy.addComponent<TransformComponent>(pos.x, pos.y, posH, posW, scale);
+    enemy.addComponent<TransformComponent>(pos.x, pos.y, 128, 160, 2);
     enemy.addComponent<SpriteComponent>(id, true, "Souls");
-    enemy.addComponent<ColliderComponent>(id, col.x, col.y, colW, colH);
+    enemy.addComponent<ColliderComponent>(id, 130, 125, 70, 95);
     enemy.addComponent<EnemyComponent>();
     // enemy.addComponent<MouseController>();
     enemy.addGroup(Game::groupEnemies);
@@ -42,24 +42,34 @@ void AssetManager::CreateProjectileP(Vector2D pos, Vector2D vel, int range, int 
     projectle.getComponent<AudioComponent>().playSoundEffect();
 }
 
-void AssetManager::CreateTree(Vector2D pos, int posH, int posW, Vector2D col, int colH, int colW, float scale, std::string id)
+void AssetManager::CreateTree(Vector2D pos, std::string id)
 {
     auto &tree(manager->addEntity());
-    tree.addComponent<TransformComponent>(pos.x, pos.y, posH, posW, scale);
+    tree.addComponent<TransformComponent>(pos.x, pos.y, 96, 53, 2);
     tree.addComponent<SpriteComponent>(id, true, "treeDemo");
-    tree.addComponent<ColliderComponent>(id, col.x, col.y, colW, colH);
+    tree.addComponent<ColliderComponent>(id, 45, 140, 16, 16);
     tree.addComponent<MouseController>();
     tree.addGroup(Game::groupObject);
 }
 
-void AssetManager::CreateRock(Vector2D pos, int posH, int posW, Vector2D col, int colW, int colH, float scale, std::string id)
+void AssetManager::CreateRock(Vector2D pos, std::string id)
 {
     auto &rock(manager->addEntity());
-    rock.addComponent<TransformComponent>(pos.x, pos.y, posH, posW, scale);
+    rock.addComponent<TransformComponent>(pos.x, pos.y, 32, 32, 1);
     rock.addComponent<SpriteComponent>(id, true, "rockDemo");
-    rock.addComponent<ColliderComponent>(id, col.x, col.y, colW, colH);
+    rock.addComponent<ColliderComponent>(id, 0, 0, 32, 32);
     rock.addComponent<MouseController>();
     rock.addGroup(Game::groupObject);
+}
+
+void AssetManager::CreateBox(Vector2D pos, std::string id)
+{
+    auto &box(manager->addEntity());
+    box.addComponent<TransformComponent>(pos.x, pos.y, 64, 32, 1);
+    box.addComponent<SpriteComponent>(id, true, "boxDemo");
+    box.addComponent<ColliderComponent>(id, 0, 32, 32, 32);
+    box.addComponent<MouseController>();
+    box.addGroup(Game::groupObject);
 }
 
 void AssetManager::AddTexture(std::string id, const char *path)
