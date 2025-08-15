@@ -106,6 +106,8 @@ void Game::setup()
 
     assets->AddTexture("terrain","res/gfx/TX Tileset Grass.png");//
     assets->AddTexture("terrain2","res/gfx/TX Tileset Wall.png");
+    assets->AddTexture("terrain3", "res/gfx/TX Props.png");
+
     assets->AddTexture("player", "res/gfx/player.png");//
     assets->AddTexture("enemy","res/gfx/Enemy.png");
     assets->AddTexture("projectile","res/gfx/projectile.png");
@@ -129,6 +131,10 @@ void Game::setup()
     m_Layer2->setCollisionTileCodes({0,21,22,23,37,39,97,98,99,100,49,51});
     m_Layer2->LoadMap("res/gfx/m_layer2.csv", 30, 20, 16);
 
+    m_Layer3 = new Map("terrain3", 2, 32);
+    m_Layer3->setCollisionTileCodes({});
+    m_Layer3->LoadMap("res/gfx/m_layer3_object.csv", 30, 20, 16);
+
     player->addComponent<TransformComponent>(1.75);
     player->addComponent<SpriteComponent>("player", true);//
     player->addComponent<KeyboardController>();
@@ -147,17 +153,19 @@ void Game::setup()
     assets->CreateEnimies(Vector2D(1154 ,682), "enemy");
 
     assets->CreateTree(Vector2D(72, 37), "treeDemo");
-    assets->CreateTree(Vector2D(161, 9), "treeDemo");
-    assets->CreateTree(Vector2D(274, 13), "treeDemo");
-    assets->CreateTree(Vector2D(401, 9), "treeDemo");
+    assets->CreateTree(Vector2D(292, 5), "treeDemo");
+    assets->CreateTree(Vector2D(553, -2), "treeDemo");
+    assets->CreateTree(Vector2D(652, 252), "treeDemo");
     assets->CreateTree(Vector2D(1490, 248), "treeDemo");
     assets->CreateTree(Vector2D(1281, 257), "treeDemo");
+    assets->CreateTree(Vector2D(1140, 633), "treeDemo");
+    assets->CreateTree(Vector2D(920, 900), "treeDemo");
     
-    assets->CreateRock(Vector2D(81,325),"rockDemo");
-    assets->CreateRock(Vector2D(378,195),"rockDemo");
-    assets->CreateRock(Vector2D(279,311),"rockDemo");
     assets->CreateRock(Vector2D(90,418),"rockDemo");
     assets->CreateRock(Vector2D(160,396),"rockDemo");
+    assets->CreateRock(Vector2D(1569,820),"rockDemo");
+    assets->CreateRock(Vector2D(1569,904),"rockDemo");
+    assets->CreateRock(Vector2D(1569,994),"rockDemo");
 
     assets->CreateBox(Vector2D(1060, 382), "boxDemo");
 
@@ -326,6 +334,7 @@ void Game::clearData()
 
     delete m_Layer1; m_Layer1 = nullptr;
     delete m_Layer2; m_Layer2 = nullptr;
+    delete m_Layer3; m_Layer3 = nullptr;
 
     delete assets;
     assets = new AssetManager(&manager);  // Gán lại sau khi xóa
@@ -354,6 +363,7 @@ void Game::clean()
 
     delete m_Layer1; m_Layer1 = nullptr;
     delete m_Layer2; m_Layer2 = nullptr;
+    delete m_Layer3; m_Layer3 = nullptr;
 
     delete assets;
 

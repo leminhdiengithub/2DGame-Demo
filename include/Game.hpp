@@ -74,6 +74,7 @@ private:
 
     Map* m_Layer1 = nullptr;
     Map* m_Layer2 = nullptr;
+    Map* m_Layer3 = nullptr;
 
     Entity* song = nullptr;
     Entity* label = nullptr;
