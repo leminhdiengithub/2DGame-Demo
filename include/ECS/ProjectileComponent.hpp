@@ -7,12 +7,10 @@
 class ProjectileComponent : public Component
 {
 public:
-    ProjectileComponent(int rng, int sp, Vector2D vel) : range(rng), speed(sp), velocity(vel)
-    {
-    }
-    ~ProjectileComponent()
-    {
-    }
+    ProjectileComponent(int rng, int sp, Vector2D vel) : range(rng), speed(sp), velocity(vel){}
+    ~ProjectileComponent(){}
+
+    bool active = false;
 
     void init() override
     {
@@ -29,6 +27,8 @@ public:
 
     void update() override
     {
+        if (!active) return;
+        
         if (!hitted)
         {
             distance += speed;
@@ -38,10 +38,7 @@ public:
                 std::cout << "Out of Range" << std::endl;
                 StartDestroy();
             }
-            else if (transfrom->position.x > Game::camera.x + Game::camera.w ||
-                    transfrom->position.x < Game::camera.x ||
-                    transfrom->position.y > Game::camera.y + Game::camera.h ||
-                    transfrom->position.y < Game::camera.y)
+            else if (outOfBounds())
             {
                 std::cout << "Out of bounds" << std::endl;
                 StartDestroy();
@@ -55,6 +52,19 @@ public:
                 entity->destroy();
             }
         }
+    }
+
+    void fire(const Vector2D& pos, const Vector2D& dir, int spd, int rng)
+    {
+        transfrom->position = pos;
+        velocity = dir * spd;
+        transfrom->velocity = velocity;
+
+        speed = spd;
+        range = rng;
+        distance = 0;
+        hitted = false;
+        active = true;
     }
 
     void StartDestroy()
@@ -81,4 +91,19 @@ private:
     Uint32 lastTime = 0;
     Uint32 coolTime = 500;
     Vector2D velocity;
+
+    bool outOfBounds()
+    {
+        return (transfrom->position.x > Game::camera.x + Game::camera.w ||
+                transfrom->position.x < Game::camera.x ||
+                transfrom->position.y > Game::camera.y + Game::camera.h ||
+                transfrom->position.y < Game::camera.y);
+    }
+
+    void reset()
+    {
+        active = false;
+        hitted = false;
+        transfrom->velocity = {0, 0};
+    }
 };
