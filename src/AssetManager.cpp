@@ -72,6 +72,16 @@ void AssetManager::CreateBox(Vector2D pos, std::string id)
     box.addGroup(Game::groupObject);
 }
 
+void AssetManager::CreateFireLace(Vector2D pos, std::string id)
+{
+    auto &fireLace(manager->addEntity());
+    fireLace.addComponent<TransformComponent>(pos.x, pos.y, 32, 32, 2);
+    fireLace.addComponent<SpriteComponent>(id, true, "fireplace");
+    fireLace.addComponent<ColliderComponent>(id, 22, 32, 16, 16);
+    fireLace.addComponent<MouseController>();
+    fireLace.addGroup(Game::groupObject);
+}
+
 void AssetManager::AddTexture(std::string id, const char *path)
 {
     textures.emplace(id, TextureManager::loadTexture(path));

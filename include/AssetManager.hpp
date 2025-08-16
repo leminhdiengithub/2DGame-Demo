@@ -21,6 +21,7 @@ public:
     void CreateTree(Vector2D pos, std::string id);
     void CreateRock(Vector2D pos, std::string id);
     void CreateBox(Vector2D pos, std::string id);
+    void CreateFireLace(Vector2D pos, std::string id);
 
     //texture management
     void AddTexture(std::string id, const char* path);

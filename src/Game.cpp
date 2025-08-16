@@ -112,6 +112,7 @@ void Game::setup()
     assets->AddTexture("enemy","res/gfx/Enemy.png");
     assets->AddTexture("projectile","res/gfx/projectile.png");
     assets->AddTexture("projectileP","res/gfx/projectile.png"); 
+    assets->AddTexture("fireplace","res/gfx/fireplace.png");
 
     assets->AddTexture("treeDemo","res/gfx/Pine Tree - GREEN  - Spritesheet.png");
     assets->AddTexture("rockDemo","res/gfx/TX Props.png");
@@ -153,7 +154,7 @@ void Game::setup()
     assets->CreateEnimies(Vector2D(1154 ,682), "enemy");
 
     assets->CreateTree(Vector2D(72, 37), "treeDemo");
-    assets->CreateTree(Vector2D(292, 5), "treeDemo");
+    assets->CreateTree(Vector2D(995, -9), "treeDemo");
     assets->CreateTree(Vector2D(553, -2), "treeDemo");
     assets->CreateTree(Vector2D(652, 252), "treeDemo");
     assets->CreateTree(Vector2D(1490, 248), "treeDemo");
@@ -167,7 +168,13 @@ void Game::setup()
     assets->CreateRock(Vector2D(1569,904),"rockDemo");
     assets->CreateRock(Vector2D(1569,994),"rockDemo");
 
-    assets->CreateBox(Vector2D(1060, 382), "boxDemo");
+    assets->CreateBox(Vector2D(1689, 740), "boxDemo");
+
+    assets->CreateFireLace(Vector2D(351,118),"fireplace");
+    assets->CreateFireLace(Vector2D(194,815),"fireplace");
+    assets->CreateFireLace(Vector2D(269,875),"fireplace");
+    assets->CreateFireLace(Vector2D(119,873),"fireplace");
+    assets->CreateFireLace(Vector2D(190,941),"fireplace");
 
     song->addComponent<AudioComponent>("backgroundMusic", true);
     song->addGroup(groupAudio);
@@ -300,8 +307,8 @@ void Game::render()
     for (auto& p : Game::getPlayers()) { drawables.push_back(p); }
 
     std::sort(drawables.begin(), drawables.end(), [](Entity* a, Entity* b) {
-        return a->getComponent<ColliderComponent>().collider.y <
-               b->getComponent<ColliderComponent>().collider.y;
+        return (a->getComponent<ColliderComponent>().collider.y + a->getComponent<ColliderComponent>().collider.h) / 2 <
+               (b->getComponent<ColliderComponent>().collider.y + b->getComponent<ColliderComponent>().collider.h) / 2;
     });
 
     for (auto& d : drawables) { d->draw(); }

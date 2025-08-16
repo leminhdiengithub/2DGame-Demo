@@ -90,6 +90,13 @@ public:
             animationManager.Play("Idle");
             setTex(id);
         }
+        if (std::string(charName) == "fireplace")
+        {
+            animationManager.addAnimation("Idle", Animation(0, 0, 6, 100));
+            animationManager.Play("Idle");
+            setTex(id);
+        }
+        
     }
 
     ~SpriteComponent()
