@@ -52,4 +52,12 @@ public:
         position.x += velocity.x * speed;
         position.y += velocity.y * speed;
     }
+
+    Vector2D getCenter()
+    {
+        return Vector2D (
+            position.x + (width * scale) / 2.0f ,
+            position.y + (height * scale) / 2.0f
+        );
+    }
 };

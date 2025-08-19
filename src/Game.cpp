@@ -219,37 +219,19 @@ void Game::update()
 
     //std::cout << player->getComponent<TransformComponent>().position.x << " + " << player->getComponent<TransformComponent>().position.y << std::endl;
 
-    float playerPosX = player->getComponent<TransformComponent>().position.x;
-    float playerPosY = player->getComponent<TransformComponent>().position.y;
-    // player center
-    float playerCenterX = playerPosX + (player->getComponent<TransformComponent>().width * player->getComponent<TransformComponent>().scale) / 2.0f;
-    float playerCenterY = playerPosY + (player->getComponent<TransformComponent>().height * player->getComponent<TransformComponent>().scale) / 2.0f;
 
+    auto& playerTransform = player->getComponent<TransformComponent>();
+
+    Vector2D playerCenter = playerTransform.getCenter();
+    
     for (auto& e : Game::getEnemies())
     {
         auto& enemyTransform = e->getComponent<TransformComponent>();
+        auto& enemyE = e->getComponent<EnemyComponent>();
 
         // Enemy center
-        float enemyCenterX = enemyTransform.position.x + (enemyTransform.width * enemyTransform.scale) / 2.0f;
-        float enemyCenterY = enemyTransform.position.y + (enemyTransform.height * enemyTransform.scale) / 2.0f;
-
-        float dx = enemyCenterX - playerCenterX;
-        float dy = enemyCenterY - playerCenterY;
-        float distance = std::sqrt(dx * dx + dy * dy);
-
-        auto& enemyComp = e->getComponent<EnemyComponent>();
-
-        if (distance >= 380.0f && distance <= 400.0f)
-        {
-            enemyComp.isTarget = true;
-        }
-        else if (distance < 380.0f)
-        {
-            enemyComp.EnemyAttack(
-            Vector2D(playerCenterX, playerCenterY), // player center
-            Vector2D(enemyCenterX, enemyCenterY) // enemy center
-            );    
-        }
+        Vector2D enemyCenter = enemyTransform.getCenter();
+        enemyE.DistanceChecking(playerCenter,enemyCenter);
     }
     
     for (auto& c : Game::getTileMapColliders())

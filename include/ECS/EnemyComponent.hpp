@@ -144,12 +144,8 @@ public:
         currentTime = SDL_GetTicks();
         Uint32 coolTimeShoot = 1300;
 
-        //Enemy center
-        float enemyCenterX = transform->position.x + (transform->width * transform->scale) / 2.0f;
-        float enemyCenterY = transform->position.y + (transform->height * transform->scale) / 2.0f;
-
-        float deltaX = playerCenter.x - enemyCenterX;
-        float deltaY = playerCenter.y - enemyCenterY;
+        float deltaX = playerCenter.x - enemyCenter.x;
+        float deltaY = playerCenter.y - enemyCenter.y;
 
         // Chuẩn hóa vector
         float length = std::sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -173,5 +169,24 @@ public:
             );
             lastTime = currentTime;
         } 
+    }
+
+    void DistanceChecking(const Vector2D& playerCenter, const Vector2D& enemyCenter)
+    {
+        float dx = enemyCenter.x - playerCenter.x;
+        float dy = enemyCenter.y - playerCenter.y;
+        float distance = std::sqrt(dx * dx + dy * dy);
+
+        if (distance >= 380.0f && distance <= 400.0f)
+        {
+            isTarget = true;
+        }
+        else if (distance < 380.0f)
+        {
+            EnemyAttack(
+            Vector2D(playerCenter.x, playerCenter.y), // player center
+            Vector2D(enemyCenter.x, enemyCenter.y) // enemy center
+            );    
+        }
     }
 };
