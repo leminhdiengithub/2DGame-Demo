@@ -253,6 +253,7 @@ void Game::update()
 
     auto& enemies = Game::getEnemies();
     auto& projectilesP = Game::getColiderprojecttilesP();
+    auto& projectiles = Game::getColiderprojecttiles();
 
     for (auto& p : projectilesP) {
         for (auto& e : enemies) {
@@ -268,6 +269,16 @@ void Game::update()
             }
         }
     }
+    for (auto& p : projectiles)
+    {
+        if (Collision::AABB(player->getComponent<ColliderComponent>(),
+            p->getComponent<ColliderComponent>()))
+        {
+            p->destroy();
+            break;
+        }
+    }
+
     camera.x = player->getComponent<TransformComponent>().position.x - 480;
     camera.y = player->getComponent<TransformComponent>().position.y - 320;
 
@@ -276,7 +287,6 @@ void Game::update()
     camera.y = std::max(0, std::min(camera.y, camera.h));
     
 }
-
 
 void Game::render()
 {
