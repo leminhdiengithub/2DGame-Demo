@@ -65,6 +65,8 @@ public:
     bool on = false;
     int cnt = 0;
     bool isMusicPlaying = true;
+    int healbath = 5;
+    int maxHeal = 5;
 
     Entity* player = nullptr;
     Entity* getPlayer() { return player; }

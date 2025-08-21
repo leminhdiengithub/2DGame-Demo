@@ -143,7 +143,7 @@ void Game::setup()
     player->addGroup(groupPlayer);
 
     SDL_Color white = { 255, 255, 255, 255 };
-    label->addComponent<ULlabel>(20, 10, "HealBath","arial", white );
+    label->addComponent<ULlabel>(20, 10, "Game_Demo","arial", white );
     label->addGroup(groupULlabel);
 
     assets->CreateEnimies(Vector2D(500, 200), "enemy");
@@ -274,9 +274,18 @@ void Game::update()
         if (Collision::AABB(player->getComponent<ColliderComponent>(),
             p->getComponent<ColliderComponent>()))
         {
+            --healbath;
             p->destroy();
             break;
         }
+    }
+
+    if (healbath <= 0)
+    {
+        on = false;
+        title.on = true;
+        clearData(); 
+        healbath = maxHeal; 
     }
 
     camera.x = player->getComponent<TransformComponent>().position.x - 480;
