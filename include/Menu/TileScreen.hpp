@@ -11,8 +11,8 @@
 
 struct titleScreen {
 	int pos = 0;
-	int n = 3;
-	textBox textBoxes[3];
+	int n = 2;
+	textBox textBoxes[2];
 
 	SDL_Texture *backgroundTexture = nullptr;
     SDL_Rect srcRect, destRect;

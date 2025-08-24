@@ -11,9 +11,8 @@ pauseMenu::pauseMenu() {
 		textBoxes[i].y = (HEIGHT - ((n - 1) * 100)) / 2 + i * 100;
 	}
 	textBoxes[0].message = "Continue";
-	textBoxes[1].message = "Tutorial";
-	textBoxes[2].message = "Title Screen";
-	textBoxes[3].message = "Quit";
+	textBoxes[1].message = "Title Screen";
+	textBoxes[2].message = "Quit";
 };
 pauseMenu::~pauseMenu() {};
 
@@ -56,9 +55,8 @@ void pauseMenu::handleEvents() {
 					// xử lý click như Enter
 					switch (pos) {
 						case 0: on = false; game->on = true; break;
-						case 1: std::cout << "w a s d to move, left click to shoot\n"; break;
-						case 2: on = false; game->clearData(); title.on = true; break;
-						case 3: game->isrunning = false; break;
+						case 1: on = false; game->clearData(); title.on = true; break;
+						case 2: game->isrunning = false; break;
 					}
 				}
 			}
@@ -76,14 +74,13 @@ void pauseMenu::handleEvents() {
 
 			case SDLK_RETURN:
 				if (pos == 0) { /*(title.)*/on = false;game->on = true; }
-				if (pos == 1) std::cout << "w a s d to move, left click to shoot" << std::endl;
-				if (pos == 2) { 
+				if (pos == 1) { 
 					on = false;
 					game->clearData(); 
 					title.on = true; 
 				}
 
-				if (pos == 3) game->isrunning = false;
+				if (pos == 2) game->isrunning = false;
 				break;
 
 			default:

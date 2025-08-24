@@ -17,8 +17,8 @@ struct pauseMenu {
 	SDL_RendererFlip spriteFlip = SDL_FLIP_NONE;
 
 
-	int n = 4;
-	textBox textBoxes[4];
+	int n = 3;
+	textBox textBoxes[3];
 	
 	int mx, my;
 	

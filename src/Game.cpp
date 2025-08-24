@@ -144,7 +144,7 @@ void Game::setup()
     player->addGroup(groupPlayer);
 
     SDL_Color white = { 255, 255, 255, 255 };
-    label->addComponent<ULlabel>(20, 10, "Game_Demo","arial", white );
+    label->addComponent<ULlabel>(20, 10, "Left click: Attack | W A S D: Move","arial", white );
     label->addGroup(groupULlabel);
 
     assets->CreateEnimies(Vector2D(500, 200), "enemy");
