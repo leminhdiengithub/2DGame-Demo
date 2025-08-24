@@ -72,6 +72,6 @@ public:
 
     void draw() override
     {
-        // TextureManager::Draw(tex, srcR, destR, SDL_FLIP_NONE);
+        // /off/ TextureManager::Draw(tex, srcR, destR, SDL_FLIP_NONE);
     }
 };
