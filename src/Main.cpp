@@ -6,6 +6,7 @@
 Game* game = nullptr;
 pauseMenu pause;
 titleScreen title;
+GameOverScreen gameOver;
 
 int main(int argc, char const* argv[])
 {
@@ -19,9 +20,11 @@ int main(int argc, char const* argv[])
     game->initWindow("shadow knights v.0.1", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 960, 640, false);
     title.loadAssets();
     pause.loadAssets();
+    gameOver.loadAssets();
 
     title.on = true;
     pause.on = false;
+    gameOver.on =false;
     game->on = false;         
     game->isrunning = true;
 
@@ -40,6 +43,11 @@ int main(int argc, char const* argv[])
             pause.handleEvents();
             pause.update();
             pause.render();
+        }else if (gameOver.on)
+        {
+            gameOver.handleEvents();
+            gameOver.update();
+            gameOver.render();
         }
         else if (game->on)
         {

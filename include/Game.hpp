@@ -13,6 +13,7 @@
 #include<Menu/PauseMenu.hpp>
 #include<Menu/TextBox.hpp>
 #include<Menu/TileScreen.hpp>
+#include<Menu/GameOver.hpp>
 #include"Map.hpp"
 
 

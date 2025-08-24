@@ -7,6 +7,7 @@
 
 extern titleScreen title;
 extern pauseMenu pause;
+extern GameOverScreen gameOver;
 
 Manager manager;
 
@@ -209,7 +210,7 @@ void Game::update()
     manager.refresh();
     manager.update();
 
-    if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
+    if (on && Mix_PlayingMusic() == 0)
     {
         song->getComponent<AudioComponent>().playMusic();
     } else if (!on && Mix_PlayingMusic() != 0)
@@ -284,7 +285,7 @@ void Game::update()
     {
         std::cout << "Player Dead." << std::endl;
         on = false;
-        title.on = true;
+        gameOver.on = true;
         clearData(); 
         healbath = maxHeal; 
     }
