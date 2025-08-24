@@ -48,7 +48,7 @@ void AssetManager::CreateTree(Vector2D pos, std::string id)
     tree.addComponent<TransformComponent>(pos.x, pos.y, 96, 53, 2);
     tree.addComponent<SpriteComponent>(id, true, "treeDemo");
     tree.addComponent<ColliderComponent>(id, 45, 140, 16, 16);
-    tree.addComponent<MouseController>();
+    // tree.addComponent<MouseController>();
     tree.addGroup(Game::groupObject);
 }
 
@@ -58,7 +58,7 @@ void AssetManager::CreateRock(Vector2D pos, std::string id)
     rock.addComponent<TransformComponent>(pos.x, pos.y, 32, 32, 1);
     rock.addComponent<SpriteComponent>(id, true, "rockDemo");
     rock.addComponent<ColliderComponent>(id, 0, 0, 32, 32);
-    rock.addComponent<MouseController>();
+    // rock.addComponent<MouseController>();
     rock.addGroup(Game::groupObject);
 }
 
@@ -68,7 +68,7 @@ void AssetManager::CreateBox(Vector2D pos, std::string id)
     box.addComponent<TransformComponent>(pos.x, pos.y, 64, 32, 1);
     box.addComponent<SpriteComponent>(id, true, "boxDemo");
     box.addComponent<ColliderComponent>(id, 0, 32, 32, 32);
-    box.addComponent<MouseController>();
+    // box.addComponent<MouseController>();
     box.addGroup(Game::groupObject);
 }
 
@@ -78,7 +78,7 @@ void AssetManager::CreateFireLace(Vector2D pos, std::string id)
     fireLace.addComponent<TransformComponent>(pos.x, pos.y, 32, 32, 2);
     fireLace.addComponent<SpriteComponent>(id, true, "fireplace");
     fireLace.addComponent<ColliderComponent>(id, 22, 32, 16, 16);
-    fireLace.addComponent<MouseController>();
+    // fireLace.addComponent<MouseController>();
     fireLace.addGroup(Game::groupObject);
 }
 
