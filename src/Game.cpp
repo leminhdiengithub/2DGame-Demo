@@ -287,7 +287,6 @@ void Game::update()
         on = false;
         gameOver.on = true;
         clearData(); 
-        healbath = maxHeal; 
     }
 
     camera.x = player->getComponent<TransformComponent>().position.x - 480;
@@ -353,6 +352,7 @@ void Game::clearData()
         song->destroy();
         song = nullptr;
     }
+    healbath = maxHeal; 
 
     // std::cout << "[INFO] Game data cleared.\n";
 }
