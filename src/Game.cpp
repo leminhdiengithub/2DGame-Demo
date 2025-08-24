@@ -120,7 +120,7 @@ void Game::setup()
 
     assets->AddFont("arial", "res/font/EvilEmpire-4BBVK.ttf", 16);
 
-    assets->AddMusic("backgroundMusic", "res/sounds/mskts.mp3");
+    assets->AddMusic("backgroundMusic", "res/sounds/Monstadt.mp3");
     assets->AddSoundEffect("projectile", "res/sounds/Projectile_sound.wav" );
     assets->AddSoundEffect("projectileP", "res/sounds/Projectile_sound.wav" );
 
@@ -209,13 +209,13 @@ void Game::update()
     manager.refresh();
     manager.update();
 
-    // if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
-    // {
-    //     song->getComponent<AudioComponent>().playMusic();
-    // } else if (!on && Mix_PlayingMusic() != 0)
-    // {
-    //     song->getComponent<AudioComponent>().stopMusic();
-    // }
+    if (on && Mix_PlayingMusic() == 0) // Nếu chưa có nhạc đang phát
+    {
+        song->getComponent<AudioComponent>().playMusic();
+    } else if (!on && Mix_PlayingMusic() != 0)
+    {
+        song->getComponent<AudioComponent>().stopMusic();
+    }
 
     //std::cout << player->getComponent<TransformComponent>().position.x << " + " << player->getComponent<TransformComponent>().position.y << std::endl;
 
@@ -280,8 +280,9 @@ void Game::update()
         }
     }
 
-    if (healbath <= 0)
+    if (healbath <= 0 || getEnemies().empty())
     {
+        std::cout << "Player Dead." << std::endl;
         on = false;
         title.on = true;
         clearData(); 
@@ -325,7 +326,7 @@ void Game::render()
 
 void Game::clearData()
 {
-    std::cout << "[INFO] Clearing game data..." << std::endl;
+    // std::cout << "[INFO] Clearing game data..." << std::endl;
 
     manager.refresh();
     manager.clear();
@@ -352,7 +353,7 @@ void Game::clearData()
         song = nullptr;
     }
 
-    std::cout << "[INFO] Game data cleared.\n";
+    // std::cout << "[INFO] Game data cleared.\n";
 }
 
 void Game::clean()

@@ -16,7 +16,7 @@ public:
     float startX;
     float speed;
     float range;
-    int healbath = 7;
+    int healbath = 3;
     bool hited = false;
     bool deathStarted = false;
     bool targeted = false;

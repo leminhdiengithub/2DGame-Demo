@@ -13,7 +13,7 @@ titleScreen::titleScreen() {
     }
 
     textBoxes[0].message = "Play";
-    textBoxes[1].message = "Options";
+    textBoxes[1].message = "Tutorial";
     textBoxes[2].message = "Quit";
 }
 
@@ -60,7 +60,7 @@ void titleScreen::handleEvents() { //change parameter "position"
 						// xử lý click như Enter
 						switch (pos) {
 							case 0: on = false; game->setup(); game->on = true; break;
-							case 1: std::cout << "Options\n"; break;
+							case 1: std::cout << "w a s d to move, left click to shoot\n"; break;
 							case 2: game->isrunning = false; break;
 						}
 					}
@@ -79,7 +79,7 @@ void titleScreen::handleEvents() { //change parameter "position"
 
 			case SDLK_RETURN:
 				if (pos == 0) { /*(title.)*/on = false; game->setup(); game->on = true; }
-				if (pos==1) std::cout << "options" << std::endl;
+				if (pos==1) std::cout << "w a s d to move, left click to shoot" << std::endl;
 				if (pos==2) game->isrunning = false;
 				break;
 
