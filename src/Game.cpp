@@ -326,7 +326,7 @@ void Game::render()
 
 void Game::clearData()
 {
-    // std::cout << "[INFO] Clearing game data..." << std::endl;
+    std::cout << "[INFO] Clearing game data..." << std::endl;
 
     manager.refresh();
     manager.clear();
@@ -354,7 +354,7 @@ void Game::clearData()
     }
     healbath = maxHeal; 
 
-    // std::cout << "[INFO] Game data cleared.\n";
+    std::cout << "[INFO] Game data cleared.\n";
 }
 
 void Game::clean()
