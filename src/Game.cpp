@@ -185,23 +185,25 @@ void Game::setup()
 
 void Game::handleEvents()
 {
-    SDL_PollEvent(&event);
-    switch (event.type)
-    {
-    case SDL_QUIT:
-        isrunning = false;
-        break;
-    case SDL_KEYDOWN:
-        if (event.key.keysym.sym == SDLK_ESCAPE) 
-        {
-			// std::cout << "t" << std::endl;
-			/*(game.)*/on = false;
-			pause.on = true;
-		}
-        break;
-    default:
-        break;
-    }
+   while (SDL_PollEvent(&event))
+   {
+       switch (event.type)
+       {
+       case SDL_QUIT:
+           isrunning = false;
+           break;
+       case SDL_KEYDOWN:
+           if (event.key.keysym.sym == SDLK_ESCAPE) 
+           {
+               // std::cout << "t" << std::endl;
+               /*(game.)*/on = false;
+               pause.on = true;
+           }
+           break;
+       default:
+           break;
+       }
+   }
 
 }
 
