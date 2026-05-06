@@ -18,7 +18,6 @@ int main(int argc, char const* argv[])
 
     game = new Game();
     game->initWindow("shadow knights v.0.1", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 960, 640, false);
-    game->setup();
     title.loadAssets();
     pause.loadAssets();
     gameOver.loadAssets();

@@ -333,16 +333,6 @@ void Game::clearData()
     manager.refresh();
     manager.clear();
 
-    getPlayers().clear();
-    gettiles().clear();
-    getEnemies().clear();
-    getTileMapColliders().clear();
-    getColiderprojecttiles().clear();
-    getColiderprojecttilesP().clear();
-    getObjects().clear();
-    getLabels().clear();
-    getAudios().clear();
-
     delete m_Layer1; m_Layer1 = nullptr;
     delete m_Layer2; m_Layer2 = nullptr;
     delete m_Layer3; m_Layer3 = nullptr;
@@ -362,16 +352,6 @@ void Game::clearData()
 void Game::clean()
 {
     manager.clear();
-
-    getPlayers().clear();
-    gettiles().clear();
-    getEnemies().clear();
-    getTileMapColliders().clear();
-    getColiderprojecttiles().clear();
-    getColiderprojecttilesP().clear();
-    getLabels().clear();
-    getObjects().clear();
-    getAudios().clear();
 
     delete m_Layer1; m_Layer1 = nullptr;
     delete m_Layer2; m_Layer2 = nullptr;
