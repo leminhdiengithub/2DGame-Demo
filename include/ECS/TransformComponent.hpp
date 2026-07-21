@@ -13,6 +13,13 @@ public:
 
     int height = 80;
     int width = 48;
+
+    int getHeight() const { return height; }
+    void setHeight(int newHeight) { height = newHeight; }
+
+    int getWidth() const { return width; }
+    void setWidth(int newWidth) { width = newWidth; }
+
     float scale = 3;
 
     int speed = 3;
@@ -60,4 +67,5 @@ public:
             position.y + (height * scale) / 2.0f
         );
     }
+
 };

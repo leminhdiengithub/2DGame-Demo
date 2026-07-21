@@ -9,6 +9,9 @@
 class SpriteComponent : public Component
 {
 private:
+
+    int frameW = 0, frameH = 0;
+
     TransformComponent *transform;
     SDL_Texture *texture;
     SDL_Rect srcRect, destRect;
@@ -38,7 +41,10 @@ public:
         animationManager.addAnimation("walk_left", Animation(0, 4, 5, 100));
 
         // Attack animation
-        animationManager.addAnimation("attack", Animation(7, 1, 2, 100));
+        animationManager.addAnimation("attack_down",  Animation(0, 5, 3, 100, 96, 80));
+        animationManager.addAnimation("attack_top", Animation(0, 6, 3, 100, 96, 80));
+        animationManager.addAnimation("attack_right", Animation(0, 7, 3, 100, 96, 80));
+        animationManager.addAnimation("attack_left",  Animation(0, 8, 3, 100, 96, 80));
 
         animationManager.Play("Idle");
         setTex(id);
@@ -120,15 +126,30 @@ public:
     {
         if (animated)
         {
-            srcRect.x = (animationManager.getXAnimIndex() + animationManager.getCurrentFrame()) * transform->width;
+            int fw = animationManager.getFrameWidth();
+            int fh = animationManager.getFrameHeight();
+            fw = (fw > 0) ? fw : transform->width;
+            fh = (fh > 0) ? fh : transform->height;
+
+            srcRect.w = fw;
+            srcRect.h = fh;
+            srcRect.x = animationManager.getXAnimIndex() * transform->width
+                    + animationManager.getCurrentFrame() * fw;
             srcRect.y = animationManager.getYAnimIndex() * transform->height;
+            destRect.w = fw * transform->scale;
+            destRect.h = fh * transform->scale;
         }
 
         destRect.x = static_cast<int>(transform->position.x) - Game::camera.x;
         destRect.y = static_cast<int>(transform->position.y) - Game::camera.y;
-        destRect.w = transform->width * transform->scale;
-        destRect.h = transform->height * transform->scale;
+
+        if (!animated) // sprite tĩnh vẫn dùng transform->width/height như cũ
+        {
+            destRect.w = transform->width * transform->scale;
+            destRect.h = transform->height * transform->scale;
+        }
     }
+
     void draw() override
     {
         TextureManager::Draw(texture, srcRect, destRect, spriteFlip);
@@ -143,4 +164,8 @@ public:
     {
         animationManager.playOneshot(animName, isOneShot);
     }
+   
+    bool isPlayingOneshot() const { return animationManager.isPlayingOneshot(); }
+    bool isAnimFinished() const {return animationManager.isAnimFinished();}
+    int getStartTime() const {return animationManager.getStartTime();}
 };
