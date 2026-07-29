@@ -216,9 +216,9 @@ File `.vscode/tasks.json` mẫu:
 - [x] Hệ thống Map / Tilemap
 - [x] Vector2D math
 - [x] Menu system
-- [ ] Âm thanh (SDL2_mixer)
-- [ ] Animation system
-- [ ] Scene Manager
+- [x] Âm thanh (SDL2_mixer)
+- [x] Animation system
+- [x] Scene Manager
 
 ---
 
