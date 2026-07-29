@@ -215,13 +215,9 @@ void Game::update()
     if (on && Mix_PlayingMusic() == 0)
     {
         song->getComponent<AudioComponent>().playMusic();
-    } else if (!on && Mix_PlayingMusic() != 0)
-    {
-        song->getComponent<AudioComponent>().stopMusic();
     }
-
+    
     //std::cout << player->getComponent<TransformComponent>().position.x << " + " << player->getComponent<TransformComponent>().position.y << std::endl;
-
 
     auto& playerTransform = player->getComponent<TransformComponent>();
 
@@ -288,7 +284,7 @@ void Game::update()
         std::cout << "Player Dead." << std::endl;
         on = false;
         gameOver.on = true;
-        clearData(); 
+        song->getComponent<AudioComponent>().stopMusic();
     }
 
     camera.x = player->getComponent<TransformComponent>().position.x - 480;
