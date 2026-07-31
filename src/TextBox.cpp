@@ -1,5 +1,4 @@
 #include "Menu/TextBox.hpp"
-#include <SDL2/SDL.h>
 #include<Game.hpp>
 
 textBox::textBox() {

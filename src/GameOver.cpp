@@ -1,5 +1,4 @@
 #include "Menu/GameOver.hpp"
-#include <SDL2/SDL.h>
 
 extern Game* game;
 extern titleScreen title;

@@ -1,5 +1,4 @@
 #include <Menu/TileScreen.hpp>
-#include <SDL2/SDL.h>
 #include <Game.hpp>
 
 extern Game* game;
