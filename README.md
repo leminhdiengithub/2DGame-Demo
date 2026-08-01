@@ -31,6 +31,8 @@
 
 Dự án được build hoàn toàn trên **Windows** thông qua **MinGW-w64 + Makefile**, không dùng CMake hay Visual Studio IDE.
 
+Link Demo: https://youtu.be/IHchJF-fpMQ
+
 ---
 
 ## 💻 Yêu cầu hệ thống
